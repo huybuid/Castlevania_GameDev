@@ -86,7 +86,7 @@ void Whip::GetBoundingBox(float &left, float &top, float &right, float &bottom)
 		if (level < 2) left = right - WHIP_SHORT_BBOX_WIDTH;
 		else left = x;
 	}
-	else
+	else //facing right
 	{
 		left = x - WHIP_X_FRAMEDISTANCE + WHIP_SPRITES_WIDTH;
 		if (level < 2)

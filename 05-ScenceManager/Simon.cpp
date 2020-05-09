@@ -6,6 +6,7 @@
 #include "Animations.h"
 #include "GameObject.h"
 #include "Item.h"
+#include "PlayScence.h"
 
 CSimon::CSimon(float x, float y) : CGameObject()
 {
@@ -32,13 +33,13 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	vector<LPCOLLISIONEVENT> coEvents;	//Collision Events
 	vector<LPCOLLISIONEVENT> coEventsResult;
 	vector<LPCOLLISIONEVENT> inEvents;	//Interaction (with items) Events
-	vector<LPCOLLISIONEVENT> inEventsResult;
+	vector<LPGAMEOBJECT> *inObjects = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items;
 	coEvents.clear();
-
+	inEvents.clear();
 	// turn off collision when dead 
 	if (state != SIMON_STATE_DIE || untouchable)
 		CalcPotentialCollisions(coObjects, coEvents);
-	CalcPotentialInteractions(coObjects, inEvents);
+	CalcPotentialInteractions(inObjects, inEvents);
 	// reset untouchable timer if untouchable time has passed
 	DWORD tick = GetTickCount();
 	if (tick - untouchable_start > SIMON_UNTOUCHABLE_TIME)
@@ -107,6 +108,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 		}
 	}
+	if (inEvents.size()>0)
 	for (UINT i = 0; i < inEvents.size(); i++)
 	{
 		LPCOLLISIONEVENT e = inEvents[i];

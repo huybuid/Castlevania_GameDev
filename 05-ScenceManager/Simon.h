@@ -40,7 +40,8 @@ class CSimon :
 {
 public:
 	int level; //indicates whip level
-	int weapon; //indicates which 
+	int weapon; //indicates which weapon Simon is currently using
+	int heart;
 	bool untouchable;
 	int hp;
 	bool isJump;
