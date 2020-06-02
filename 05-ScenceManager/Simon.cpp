@@ -49,15 +49,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	if (tick - attack_start > SIMON_ATTACK_TIME && attack_start>0)
 	{
-		if (isAttack) //Is the attack button still down?
-		{
-			StartAttackSequence();
-		}
-		else
-		{
-			attack_start = 0;
-			ResetAttackState();
-		}
+		isAttack = 0;
+		attack_start = 0;
+		ResetAttackState();
 	}
 
 	// No collision occured, proceed normally

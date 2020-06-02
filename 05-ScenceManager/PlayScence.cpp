@@ -35,6 +35,11 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 #define OBJECT_TYPE_BRICK	1
 #define OBJECT_TYPE_FIREPILLAR	2
 #define OBJECT_TYPE_WHIP	3
+#define OBJECT_TYPE_CANDLE	4
+#define OBJECT_TYPE_STAIRS	5
+#define OBJECT_TYPE_ZOMBIE	6
+#define OBJECT_TYPE_KNIGHT	7
+#define OBJECT_TYPE_BAT		8
 
 #define OBJECT_TYPE_PORTAL	50
 
@@ -120,7 +125,6 @@ void CPlayScene::_ParseSection_ANIMATION_SETS(string line)
 		LPANIMATION ani = animations->Get(ani_id);
 		s->push_back(ani);
 	}
-
 	CAnimationSets::GetInstance()->Add(ani_set_id, s);
 }
 
@@ -155,6 +159,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		}
 		obj = new CSimon(x,y); 
 		player = (CSimon*)obj;  
+		player->SetLevel(2);
 		DebugOut(L"[INFO] Player object created!\n");
 		break;
 	case OBJECT_TYPE_FIREPILLAR: obj = new FirePillar(); break;
@@ -329,22 +334,13 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (!simon->isJump  && simon->GetState() != SIMON_STATE_ATTACKING && simon->GetState() != SIMON_STATE_DUCKATK && !simon->isDuck)
+		if (!simon->isAttack && !simon->isDuck && !simon->isJump)
 		{
 			simon->SetState(SIMON_STATE_JUMP);
 		}
 		break;
 	case DIK_A:
 		simon->Reset();
-		break;
-	case DIK_Z:
-		simon->StartAttackSequence();
-		break;
-	case DIK_DOWN:
-		if (!simon->isJump && simon->GetState()!=SIMON_STATE_ATTACKING)
-		{
-			simon->SetState(SIMON_STATE_DUCKING);
-		}
 		break;
 	}
 }
@@ -355,9 +351,6 @@ void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
 	switch (KeyCode)
 	{
-	case DIK_Z:
-		simon->isAttack = 0;
-		break;
 	}
 }
 
@@ -367,6 +360,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
 
 	// disable control key when Simon die 
+	if (simon->GetState() == SIMON_STATE_DIE) return;
 	if (!game->IsKeyDown(DIK_DOWN))
 	{
 		if (simon->GetState() == SIMON_STATE_DUCKING)
@@ -385,31 +379,52 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	}
 	else
 	{
-		if (simon->GetState() == SIMON_STATE_ATTACKING)
+		if (simon->isAttack)
 		{
-			if (GetTickCount() - simon->attack_start > SIMON_ATTACK_TIME  && simon->attack_start > 0)
+			if (simon->attack_start <= 0)
 			{
-				simon->isDuck = 1;
-				simon->y += 8;
+				simon->SetState(SIMON_STATE_DUCKING);
+			}
+		}
+		else
+		{
+			if (!simon->isJump && !simon->isDuck)
+			{
+				simon->SetState(SIMON_STATE_DUCKING);
 			}
 		}
 	}
-	if (simon->GetState() == SIMON_STATE_DIE || simon->isJump || simon->GetState()==SIMON_STATE_ATTACKING || simon->GetState()== SIMON_STATE_DUCKATK) return;
-	if (game->IsKeyDown(DIK_RIGHT))
+	if (!simon->isAttack) //disable keys when attacking
 	{
-		simon->nx = 1;
-		if (!simon->isDuck)
-			simon->vx = SIMON_WALKING_SPEED * simon->nx;
+		if (game->IsKeyDown(DIK_RIGHT))
+		{
+			if (!simon->isJump)
+			{
+				simon->nx = 1;
+				if (!simon->isDuck)
+					simon->vx = SIMON_WALKING_SPEED * simon->nx;
+			}
+		}
+		else if (game->IsKeyDown(DIK_LEFT))
+		{
+			if (!simon->isJump)
+			{
+				simon->nx = -1;
+				if (!simon->isDuck)
+					simon->vx = SIMON_WALKING_SPEED * simon->nx;
+			}
+		}
+		else
+		{
+			if (!simon->isDuck && !simon->isAttack)
+				simon->SetState(SIMON_STATE_IDLE);
+		}
 	}
-	else if (game->IsKeyDown(DIK_LEFT))
+	if (game->IsKeyDown(DIK_Z))
 	{
-		simon->nx = -1;
-		if (!simon->isDuck)
-			simon->vx = SIMON_WALKING_SPEED * simon->nx;
-	}
-	else
-	{
-		if (!simon->isDuck && !simon->isAttack)
-			simon->SetState(SIMON_STATE_IDLE);
+		if (!simon->isAttack)
+		{
+			simon->StartAttackSequence();
+		}
 	}
 }
