@@ -1,6 +1,7 @@
 #pragma once
 #include "BackGround.h"
 #include "Game.h"
+#include "Item.h"
 #include "Textures.h"
 #include "Scence.h"
 #include "GameObject.h"
@@ -11,6 +12,8 @@
 #include "Simon.h"
 
 #define CAM_X_SETVALUE	160
+#define SCREEN_WIDTH 272
+#define SCREEN_HEIGHT 240
 
 class CPlayScene: public CScene
 {
@@ -33,6 +36,7 @@ public:
 	CPlayScene(int id, LPCWSTR filePath);
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> items;
+	vector<LPGAMEOBJECT> weapons;
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

@@ -1,9 +1,10 @@
 #include "Weapon.h"
+#include "Enemy.h"
 
 void CWeapon::CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects,
 	vector<LPGAMEOBJECT> &coResults)
 {
-	float tl, tt, tr, tb; //whip's coordinates
+	float tl, tt, tr, tb; //weapon's coordinates
 	this->GetBoundingBox(tl, tt, tr, tb);
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
@@ -29,6 +30,15 @@ CWeapon::CWeapon() : CGameObject()
 	isAttackable = false;
 	isCollidable = false;
 	isInteractive = false;
+}
+
+void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	CGameObject::Update(dt);
+	vector<LPGAMEOBJECT> coResults;
+	coResults.clear();
+	CalcPotentialObjectsOverlapsed(coObjects, coResults);
+	//more codes to follow up
 }
 
 

@@ -17,10 +17,11 @@ void Background::Load(int texID)
 			sprites->Add(BACKGROUND_ID + i * n + j, j * BG_WIDTH, i * BG_HEIGHT, (j + 1) * BG_WIDTH, (i + 1) * BG_HEIGHT, tex);
 		}
 	}
-	inp >> m >> n;
-	for (int i = 0; i < m; i++)
+	inp >> rows >> columns;
+	inp >> screen_limit;
+	for (int i = 0; i < rows; i++)
 	{
-		for (int j = 0; j < n; j++)
+		for (int j = 0; j < columns; j++)
 		{
 			inp >> k;
 			ani = new CAnimation(100);
@@ -39,8 +40,8 @@ void Background::Render(float x, float y)
 	{
 		for (int j = n; j < n + 11; j++)
 		{
-			if (i * MAP_COLUMNS + j < tiles.size())
-				tiles[i * MAP_COLUMNS + j]->Render(j * BG_HEIGHT, i * BG_WIDTH, -1, 255);
+			if (i * columns + j < tiles.size())
+				tiles[i * columns + j]->Render(j * BG_HEIGHT, i * BG_WIDTH, -1, 255);
 		}
 	}
 }

@@ -7,6 +7,11 @@
 #include "GameObject.h"
 #include "Item.h"
 #include "PlayScence.h"
+#include "define.h"
+#include "Dagger.h"
+#include "Axe.h"
+#include "Cross.h"
+#include "HolyWater.h"
 
 CSimon::CSimon(float x, float y) : CGameObject()
 {
@@ -16,10 +21,13 @@ CSimon::CSimon(float x, float y) : CGameObject()
 	isAttack = 0;
 	isDuck = 0;
 	SetState(SIMON_STATE_IDLE);
+	heart = 5;
+	hp = SIMON_MAX_HP;
 	start_x = x;
 	start_y = y;
 	this->x = x;
 	this->y = y;
+	this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_SIMON);
 }
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
@@ -49,6 +57,26 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	if (tick - attack_start > SIMON_ATTACK_TIME && attack_start>0)
 	{
+		if (isWeaponAttack)
+		{
+
+			switch (weapon_indicator)
+			{
+			case SIMON_WEAPON_AXE:
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Axe(x+8, y, nx));
+				break;
+			case SIMON_WEAPON_DAGGER:
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Dagger(x+8, y, nx));
+				break;
+			case SIMON_WEAPON_CROSS:
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Cross(x+8, y, nx));
+				break;
+			case SIMON_WEAPON_HOLYWATER:
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new HolyWater(x+8, y, nx));
+			default:
+				break;
+			}
+		}
 		isAttack = 0;
 		attack_start = 0;
 		ResetAttackState();
@@ -75,17 +103,20 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		// block every object first!
 		x += min_tx * dx + nx * 0.1f;
-		y += min_ty * dy + ny * 0.1f;
+		if (ny < 0)
+			y += min_ty * dy + ny * 0.1f;
+		else
+			y += dy + ny * 0.1f;
 
 		if (nx != 0) vx = 0;
-		if (ny != 0)
+		if (ny < 0)
 		{
 			if (isJump)
 			{
 				vx = 0;
+				isJump = false;
+				animation_set->at(SIMON_ANI_JUMP)->SetCurrentFrame();
 			}
-			isJump = false;
-			animation_set->at(SIMON_ANI_JUMP)->SetCurrentFrame();
 			vy = 0;
 		}
 		//
@@ -131,6 +162,7 @@ void CSimon::ResetAttackState()
 	{
 		SetState(SIMON_STATE_DUCKING);
 	}
+	isWeaponAttack = false;
 }
 
 void CSimon::Render() {
@@ -209,7 +241,10 @@ void CSimon::SetState(int state)
 		break;
 	case SIMON_STATE_ATTACKING:
 		if (isJump)
-			y -= 8;
+		{
+			if (animation_set->at(SIMON_ANI_JUMP)->GetCurrentFrame() == 0)
+				y -= 8;
+		}
 		else
 			vx = 0;
 	break;
@@ -233,15 +268,43 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	}
 }
 
+void CSimon::StartAttackSequence(bool isWhipAtk)
+{
+		isAttack = 1;
+		attack_start = GetTickCount();
+		if (isWhipAtk || current_weapon_count >= weapon_level || weapon_indicator == SIMON_WEAPON_NONE || weapon_indicator == SIMON_WEAPON_STOPWATCH)
+			whip->SetState(WHIP_STATE_ATTACK);
+		else
+		{
+			isWeaponAttack = true;
+		}
+		if (weapon_indicator == SIMON_WEAPON_STOPWATCH)
+		{
+			//Stop time
+		}
+		if (isDuck)
+			SetState(SIMON_STATE_DUCKATK);
+		else SetState(SIMON_STATE_ATTACKING);
+}
+
 /*
 	Reset SIMON status to the beginning state of a scene
 */
 void CSimon::Reset()
 {
 	SetState(SIMON_STATE_IDLE);
-	SetLevel(0);
 	SetPosition(start_x, start_y);
 	SetSpeed(0, 0);
+}
+
+void CSimon::HardReset()
+{
+	Reset();
+	SetLevel(0);
+	weapon_indicator = SIMON_WEAPON_NONE;
+	hp = SIMON_MAX_HP;
+	heart = 5;
+	weapon_level = 0;
 }
 
 

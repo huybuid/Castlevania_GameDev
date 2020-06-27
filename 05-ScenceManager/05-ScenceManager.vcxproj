@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -131,27 +131,41 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="BigHeart.cpp" />
     <ClCompile Include="Brick.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="FirePillar.cpp" />
+    <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="IAxe.cpp" />
+    <ClCompile Include="ICross.cpp" />
+    <ClCompile Include="IDagger.cpp" />
+    <ClCompile Include="IHolyWater.cpp" />
+    <ClCompile Include="InvincibleBottle.cpp" />
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Koopas.cpp" />
+    <ClCompile Include="MoneyPouch.cpp" />
+    <ClCompile Include="Rosary.cpp" />
+    <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="SmallHeart.cpp" />
+    <ClCompile Include="StopWatch.cpp" />
     <ClCompile Include="Utils.cpp" />
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="GameObject.cpp" />
     <ClCompile Include="Goomba.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Mario.cpp" />
     <ClCompile Include="PlayScence.cpp" />
     <ClCompile Include="Scence.cpp" />
     <ClCompile Include="Sprites.cpp" />
     <ClCompile Include="Textures.cpp" />
     <ClCompile Include="Weapon.cpp" />
+    <ClCompile Include="WeaponUpgrade.cpp" />
     <ClCompile Include="Whip.cpp" />
+    <ClCompile Include="WhipUpgrade.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
@@ -159,27 +173,42 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="BigHeart.h" />
     <ClInclude Include="Brick.h" />
+    <ClInclude Include="define.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Chicken.h" />
     <ClInclude Include="Cross.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="FirePillar.h" />
+    <ClInclude Include="Grid.h" />
     <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="IAxe.h" />
+    <ClInclude Include="ICross.h" />
+    <ClInclude Include="IDagger.h" />
+    <ClInclude Include="IHolyWater.h" />
+    <ClInclude Include="InvincibleBottle.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="Koopas.h" />
+    <ClInclude Include="MoneyPouch.h" />
+    <ClInclude Include="Rosary.h" />
+    <ClInclude Include="Orb.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Simon.h" />
+    <ClInclude Include="SmallHeart.h" />
+    <ClInclude Include="StopWatch.h" />
     <ClInclude Include="Utils.h" />
     <ClInclude Include="Game.h" />
     <ClInclude Include="GameObject.h" />
     <ClInclude Include="Goomba.h" />
     <ClInclude Include="KeyEventHandler.h" />
-    <ClInclude Include="Mario.h" />
     <ClInclude Include="PlayScence.h" />
     <ClInclude Include="Scence.h" />
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponUpgrade.h" />
     <ClInclude Include="Whip.h" />
+    <ClInclude Include="WhipUpgrade.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

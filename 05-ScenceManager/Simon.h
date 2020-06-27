@@ -2,12 +2,13 @@
 #include "GameObject.h"
 #include "Whip.h"
 
-#define SIMON_WALKING_SPEED		0.08f 
+#define SIMON_WALKING_SPEED		0.07f 
 #define SIMON_JUMP_SPEED_Y		0.2f
 #define SIMON_JUMP_DEFLECT_SPEED 0.1f
-#define SIMON_JUMP_GRAVITY		0.00055f
+#define SIMON_JUMP_GRAVITY		0.0006f
 #define SIMON_GRAVITY			0.001f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
+#define SIMON_MAX_HP			16
 
 #define SIMON_STATE_IDLE			0
 #define SIMON_STATE_WALKING			100
@@ -26,6 +27,13 @@
 
 #define SIMON_ANI_DIE				20
 
+#define SIMON_WEAPON_NONE			0
+#define SIMON_WEAPON_AXE			1
+#define SIMON_WEAPON_CROSS			2
+#define SIMON_WEAPON_DAGGER			3
+#define SIMON_WEAPON_HOLYWATER		4
+#define SIMON_WEAPON_STOPWATCH		5
+
 #define SIMON_IDLE_BBOX_WIDTH		16
 #define SIMON_STANDING_BBOX_HEIGHT	32
 
@@ -40,12 +48,13 @@ class CSimon :
 {
 public:
 	int level; //indicates whip level
-	int weapon; //indicates which weapon Simon is currently using
+	int weapon_indicator; //indicates which weapon Simon is currently using
 	int heart;
 	bool untouchable;
 	int hp;
+	int weapon_level, current_weapon_count=0;
 	bool isJump;
-	bool isAttack;
+	bool isAttack, isWeaponAttack=false;
 	bool isDuck;
 	DWORD untouchable_start;
 	DWORD attack_start;
@@ -64,16 +73,10 @@ public:
 	void ResetAttackState();
 	void SetLevel(int l) { level = l; }
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
-	void StartAttackSequence() { 
-		isAttack = 1; 
-		attack_start = GetTickCount(); 
-		whip->SetState(WHIP_STATE_ATTACK); 
-		if (isDuck)
-			SetState(SIMON_STATE_DUCKATK);
-		else SetState(SIMON_STATE_ATTACKING);
-	}
+	void StartAttackSequence(bool isWhipAtk);
 
 	void Reset();
+	void HardReset();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 };

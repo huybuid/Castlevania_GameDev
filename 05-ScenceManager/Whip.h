@@ -45,7 +45,7 @@ public:
 		level = 0;
 		attack_start = 0;
 	}
-	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
+	void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
 	//void ResetAttackState();
 	void SetState(int state);

@@ -10,6 +10,7 @@ class CWeapon :
 {
 public:
 	CWeapon();
+	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	void CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> &coResults);
 	~CWeapon();
 };

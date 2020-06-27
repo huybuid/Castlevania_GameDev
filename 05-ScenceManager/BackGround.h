@@ -8,19 +8,16 @@ using namespace std;
 
 #define BG_WIDTH  32
 #define BG_HEIGHT 32
-#define MAP_COLUMNS 24
-#define MAP_ROWS 6
-#define SCREEN_WIDTH 320
-#define SCREEN_HEIGHT 240
 #define BACKGROUND_ID 5000
 
 class Background
 {
 	int m, n;
-	static Background * __instance;
+	int rows, columns;
 public:
 	vector<LPANIMATION> tiles;
 	string path;
+	int screen_limit;
 	void SetPath(string s)
 	{
 		path = s;

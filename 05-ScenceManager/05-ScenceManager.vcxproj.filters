@@ -13,6 +13,15 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Items">
+      <UniqueIdentifier>{160235e5-3059-403b-a15b-29e837bd8dc5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Weapons">
+      <UniqueIdentifier>{94791f4f-d9c7-47f5-ae47-6d627680f491}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Enemy">
+      <UniqueIdentifier>{0613f0ae-9d7a-4ec8-8f33-eeb2e4b18161}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Brick.cpp">
@@ -24,13 +33,7 @@
     <ClCompile Include="GameObject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Goomba.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Mario.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Sprites.cpp">
@@ -51,9 +54,6 @@
     <ClCompile Include="Utils.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Koopas.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Portal.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -66,32 +66,83 @@
     <ClCompile Include="Platform.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="BigHeart.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Chicken.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="IAxe.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="ICross.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="IDagger.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="IHolyWater.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="InvincibleBottle.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Item.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="MoneyPouch.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Orb.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="SmallHeart.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="StopWatch.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponUpgrade.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="WhipUpgrade.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Rosary.cpp">
+      <Filter>Items</Filter>
+    </ClCompile>
+    <ClCompile Include="Axe.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Cross.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Dagger.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="HolyWater.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
     <ClCompile Include="Whip.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Weapon.cpp">
+      <Filter>Weapons</Filter>
+    </ClCompile>
+    <ClCompile Include="Grid.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="FirePillar.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Weapon.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Goomba.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Dagger.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Koopas.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="Item.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Cross.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="HolyWater.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Axe.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="BigHeart.cpp">
-      <Filter>Source Files</Filter>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>Enemy</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -102,12 +153,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="GameObject.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Goomba.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Mario.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Sprites.h">
@@ -131,9 +176,6 @@
     <ClInclude Include="Utils.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Koopas.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Portal.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -146,31 +188,85 @@
     <ClInclude Include="Platform.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BigHeart.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Chicken.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="IAxe.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="ICross.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="IDagger.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="IHolyWater.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="InvincibleBottle.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Item.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="MoneyPouch.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Orb.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="SmallHeart.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="StopWatch.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponUpgrade.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WhipUpgrade.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Rosary.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="Axe.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Cross.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Dagger.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="HolyWater.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
     <ClInclude Include="Whip.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Weapon.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Grid.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FirePillar.h">
-      <Filter>Header Files</Filter>
+      <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Weapon.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Goomba.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Dagger.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Koopas.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Item.h">
-      <Filter>Header Files</Filter>
+    <ClInclude Include="Enemy.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="Cross.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="HolyWater.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Axe.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="BigHeart.h">
+    <ClInclude Include="define.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
