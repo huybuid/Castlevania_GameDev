@@ -1,11 +1,5 @@
 #include "Enemy.h"
 
-
-
-CEnemy::CEnemy()
-{
-}
-
 void CEnemy::Destroy()
 {
 	isActive = 0;

@@ -75,6 +75,7 @@ void CGrid::GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_
 
 void CGrid::Clear()
 {
-	for (int i=0;i<GRID_ROW_MAX;i++)
-		delete[] cells[i];
+	for (int i = 0; i < GRID_ROW_MAX; i++)
+		for (int j = 0; j < GRID_COLUMN_MAX; j++)
+			cells[i][j].clear();
 }

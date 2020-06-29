@@ -1,5 +1,5 @@
 #pragma once
-#include "GameObject.h"
+#include "Enemy.h"
 #include "Item.h"
 #include "define.h"
 
@@ -14,19 +14,17 @@
 
 
 class FirePillar :
-	public CGameObject
+	public CEnemy
 {
-	CItem *item = NULL;
 	float width, height;
 	int type, item_id;
 public:
-	FirePillar() { isCollidable = false; isEnemy = false; isAttackable = true; this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_FIREPILLAR); };
+	FirePillar() { hp = 1; isEnemy = false; this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_FIREPILLAR); };
 	FirePillar(float x, float y, int t, int id) :FirePillar() { type = t; item_id = id; this->x = x; this->y = y; };
 	virtual void Render();
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Destroy();
-	void SetItem(CItem *i) { item = i; };
-	~FirePillar() { if (item!=NULL)	delete item; };
+	~FirePillar() {};
 	CItem* SpawnItem(int n);
 };
 

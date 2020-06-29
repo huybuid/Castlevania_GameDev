@@ -64,7 +64,7 @@ public:
 	float start_x;			// initial position of Simon at scene
 	float start_y;
 public:
-	CSimon(float x = 0.0f, float y = 0.0f);
+	CSimon(float x = 0.0f, float y = 0.0f, float nx = 0);
 	~CSimon() {};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
@@ -75,7 +75,7 @@ public:
 	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
 	void StartAttackSequence(bool isWhipAtk);
 
-	void Reset();
+	void Reset(float reset_x, float reset_y, float nx = 0);
 	void HardReset();
 
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);

@@ -2,8 +2,8 @@
 #include "Weapon.h"
 #include "define.h"
 
-#define HOLYWATER_SPEED_X 0.15f
-#define HOLYWATER_SPEED_Y -0.05f
+#define HOLYWATER_SPEED_X 0.12f
+#define HOLYWATER_SPEED_Y -0.055f
 #define HOLYWATER_GRAVITY	0.0005f
 
 #define HOLYWATER_STATE_BOTTLE	0
@@ -13,7 +13,7 @@
 #define HOLYWATER_BBOX_X_BURN	16
 #define HOLYWATER_BBOX_Y		16
 
-#define HOLYWATER_BURN_TIME		600
+#define HOLYWATER_BURN_TIME		1000
 
 class HolyWater :
 	public CWeapon

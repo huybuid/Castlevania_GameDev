@@ -13,7 +13,7 @@
 #include "Cross.h"
 #include "HolyWater.h"
 
-CSimon::CSimon(float x, float y) : CGameObject()
+CSimon::CSimon(float x, float y, float nx) : CGameObject()
 {
 	level = 0;
 	untouchable = 0;
@@ -25,6 +25,7 @@ CSimon::CSimon(float x, float y) : CGameObject()
 	hp = SIMON_MAX_HP;
 	start_x = x;
 	start_y = y;
+	this->nx = nx;
 	this->x = x;
 	this->y = y;
 	this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_SIMON);
@@ -72,7 +73,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Cross(x+8, y, nx));
 				break;
 			case SIMON_WEAPON_HOLYWATER:
-				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new HolyWater(x+8, y, nx));
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new HolyWater(x+12, y, nx));
 			default:
 				break;
 			}
@@ -290,16 +291,19 @@ void CSimon::StartAttackSequence(bool isWhipAtk)
 /*
 	Reset SIMON status to the beginning state of a scene
 */
-void CSimon::Reset()
+void CSimon::Reset(float reset_x, float reset_y, float nx)
 {
 	SetState(SIMON_STATE_IDLE);
-	SetPosition(start_x, start_y);
+	start_x = reset_x;
+	start_y = reset_y;
+	this->nx = nx;
+	SetPosition(reset_x, reset_y);
 	SetSpeed(0, 0);
 }
 
 void CSimon::HardReset()
 {
-	Reset();
+	Reset(start_x, start_y);
 	SetLevel(0);
 	weapon_indicator = SIMON_WEAPON_NONE;
 	hp = SIMON_MAX_HP;

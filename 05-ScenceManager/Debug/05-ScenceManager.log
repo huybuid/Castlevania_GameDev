@@ -1,3 +1,21 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (05-ScenceManager.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Simon.cpp
+  Enemy.cpp
+  FirePillar.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\smallheart.h(7): warning C4005: 'HEART_BBOX_WIDTH': macro redefinition
+  d:\study\gamedev-intro-tutorials-master\05-scencemanager\bigheart.h(8): note: see previous definition of 'HEART_BBOX_WIDTH'
+  Grid.cpp
+  PlayScence.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(65): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(84): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(87): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(182): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(200): warning C4018: '<': signed/unsigned mismatch
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(257): warning C4060: switch statement contains no 'case' or 'default' labels
+  Weapon.cpp
+  Whip.cpp
+  Generating Code...
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\firepillar.cpp(89): warning C4715: 'FirePillar::SpawnItem': not all control paths return a value
   05-ScenceManager.vcxproj -> D:\Study\gamedev-intro-tutorials-master\Debug\Castlevania.exe

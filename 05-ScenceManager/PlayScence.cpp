@@ -80,10 +80,11 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 	case OBJECT_TYPE_SIMON:
 		if (player!=NULL) 
 		{
-			DebugOut(L"[ERROR] SIMON object was created before!\n");
+			DebugOut(L"[ERROR] SIMON object was created before, starting soft-reset!\n");
+			player->Reset(x,y, nx);
 			return;
 		}
-		obj = new CSimon(x, y);
+		obj = new CSimon(x, y, nx);
 		player = (CSimon*)obj;
 		player->whip = new Whip();
 		player->whip->SetAnimationSet(animation_sets->Get(3));
@@ -212,12 +213,10 @@ void CPlayScene::Render()
 */
 void CPlayScene::Unload()
 {
-	for (int i = 0; i < objects.size(); i++)
-		delete objects[i];
-
-	objects.clear();
-	player = NULL;
-
+	if (CGrid::GetInstance())
+		CGrid::GetInstance()->Clear();
+	items.clear();
+	weapons.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
@@ -244,7 +243,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		}
 		break;
 	case DIK_A:
-		simon->Reset();
+		simon->Reset(simon->start_x, simon->start_y);
 		break;
 	}
 }

@@ -35,9 +35,6 @@ CWeapon::CWeapon() : CGameObject()
 void CWeapon::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
-	vector<LPGAMEOBJECT> coResults;
-	coResults.clear();
-	CalcPotentialObjectsOverlapsed(coObjects, coResults);
 	//more codes to follow up
 }
 

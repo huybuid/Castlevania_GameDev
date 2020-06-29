@@ -43,7 +43,7 @@ void FirePillar::Destroy()
 {
 	if (item_id != 0)
 	{
-		item = SpawnItem(item_id);
+		CItem *item = SpawnItem(item_id);
 		item->SetPosition(this->x, this->y);
 		((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items.push_back(item);
 	}
@@ -81,6 +81,8 @@ CItem *FirePillar::SpawnItem(int i)
 		return new InvincibleBottle();
 	case 13:
 		return new Orb();
+	case 14:
+		return new Chicken();
 	default:
 		break;
 	}

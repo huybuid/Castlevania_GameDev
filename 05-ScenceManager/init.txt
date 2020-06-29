@@ -1,6 +1,6 @@
 [SETTINGS]
 
-start	1
+start	2
 #id	file_path	transparent_color_r	g	b
 [TEXTURES]
 0	textures\simon1.png	116	116	116
@@ -8,6 +8,7 @@ start	1
 20	textures\items.png	116	116	116
 30	Scene1\results.png	0	0	0
 40	Scene2\results.png	0	0	0
+50	Scene3\results.png	0	0	0
 # id	left	top	right	bottom	texture_id
 
 [SPRITES]
@@ -81,11 +82,11 @@ start	1
 1174	566	477	582	493	0
 #bomb
 1181	587	477	595	493	0
-1182	596	477	604	493	0
-1183	605	477	613	493	0
-1184	614	477	622	493	0
-1185	623	477	639	493	0
-1186	640	477	656	493	0
+1182	596	477	612	493	0
+1183	609	477	625	493	0
+1184	622	477	638	493	0
+1185	639	477	655	493	0
+1186	656	477	672	493	0
 #hit fx
 1999 	727	477	735	493	0
 #fire pillar
