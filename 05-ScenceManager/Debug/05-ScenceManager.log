@@ -1,7 +1,5 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (05-ScenceManager.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  BackGround.cpp
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\background.cpp(37): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\background.cpp(38): warning C4244: 'initializing': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\background.cpp(45): warning C4018: '<': signed/unsigned mismatch
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\background.cpp(46): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  Bat.cpp
+  Grid.cpp
+  Generating Code...
   05-ScenceManager.vcxproj -> D:\Study\gamedev-intro-tutorials-master\Debug\Castlevania.exe

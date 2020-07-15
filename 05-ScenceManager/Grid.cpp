@@ -5,6 +5,7 @@
 #include "StairBottom.h"
 #include "StairTop.h"
 #include "Bat.h"
+#include "Knight.h"
 
 CGrid* CGrid::__instance = NULL;
 
@@ -44,7 +45,9 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 	case 4:
 		return new StairBottom(x, y, n);
 	case 5:
-		//return new Bat();
+		return new Knight(x,y,n,w,h);
+	case 6:
+		return new Bat(x, y, n);
 	case 50:
 		return new CPortal(x, y, w, h, type);
 	/*case PORTAL: return new CGate(x, y);

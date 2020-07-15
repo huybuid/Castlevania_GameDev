@@ -17,6 +17,7 @@ class CAnimationFrame
 public:
 	CAnimationFrame(LPSPRITE sprite, int time) { this->sprite = sprite; this->time = time; }
 	DWORD GetTime() { return time; }
+	void SetTime(DWORD t) { time = t; }
 	LPSPRITE GetSprite() { return sprite; }
 };
 
@@ -34,6 +35,7 @@ public:
 	int GetCurrentFrame() { return currentFrame; }
 	void SetCurrentFrame() { currentFrame = -1; }
 	void Render(float x, float y, int nx = 0, int alpha = 255);
+	void FreezeRender(float x, float y, int nx = 0, int alpha = 255);
 };
 
 typedef CAnimation *LPANIMATION;

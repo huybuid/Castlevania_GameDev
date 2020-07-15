@@ -5,6 +5,7 @@ void CEnemy::Destroy()
 	isActive = 0;
 }
 
+
 void CEnemy::Damage(int dmg)
 {
 	hp -= dmg;

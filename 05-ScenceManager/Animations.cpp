@@ -45,6 +45,31 @@ void CAnimation::Render(float x, float y, int nx, int alpha)
 		frames[currentFrame]->GetSprite()->DrawFlipX(x, y, alpha);
 }
 
+void CAnimation::FreezeRender(float x, float y, int nx, int alpha)
+{
+	DWORD now = GetTickCount();
+	if (currentFrame == -1)
+	{
+		currentFrame = 0;
+		lastFrameTime = now;
+	}
+	else
+	{
+		DWORD t = frames[currentFrame]->GetTime();
+		if (now - lastFrameTime > t)
+		{
+			currentFrame++;
+			lastFrameTime = now;
+			if (currentFrame == frames.size()) currentFrame = 0;
+		}
+	}
+
+	if (nx <= 0)
+		frames[currentFrame]->GetSprite()->Draw(x, y, alpha);
+	else
+		frames[currentFrame]->GetSprite()->DrawFlipX(x, y, alpha);
+}
+
 CAnimations * CAnimations::__instance = NULL;
 
 CAnimations * CAnimations::GetInstance()

@@ -8,7 +8,7 @@ using namespace std;
 
 #define BG_WIDTH  32
 #define BG_HEIGHT 32
-#define BACKGROUND_ID 5000
+#define BACKGROUND_ID 6000
 
 class Background
 {
