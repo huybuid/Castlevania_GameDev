@@ -69,8 +69,6 @@ void CGrid::GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_
 
 	int top = (int)(cam_y) / GRID_CELL_HEIGHT;
 	int bottom = (int)(cam_y + SCREEN_HEIGHT) / GRID_CELL_HEIGHT;
-	int height = GRID_CELL_HEIGHT;
-	int width = GRID_CELL_WIDTH;
 	/*if ((int)(cam_y) % height == 0 )
 	{
 		bottom--;
@@ -78,7 +76,6 @@ void CGrid::GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_
 
 
 	int left = (int)(cam_x) / GRID_CELL_WIDTH;
-	if (left > 0)left--;
 	int right = (int)(cam_x + SCREEN_WIDTH) / GRID_CELL_WIDTH;
 
 	for (int i = top; i <= bottom; i++)

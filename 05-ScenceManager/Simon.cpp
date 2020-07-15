@@ -102,7 +102,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (nx <= 0) //Simon facing left
 			{
-				if (x+8 < target_x)
+				if (x+8 <= target_x)
 				{
 					x = target_x-8;
 					nx = -stair_ny*stair_nx;
@@ -112,7 +112,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			}
 			else
 			{
-				if (x+8 > target_x)
+				if (x+8 >= target_x)
 				{
 					x = target_x-8;
 					nx = -stair_ny*stair_nx;
@@ -210,12 +210,15 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 			if (e->ny > 0)
 			{
 				target_x = e->obj->x;
-				stair_nx = e->obj->nx;
-				isOnStairTop = true;
+				if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
+				{
+					stair_nx = e->obj->nx;
+					isOnStairTop = true;
+				}
 			}
 			else
 				isOnStairTop = false;
-			if (state == SIMON_STATE_STAIRCLIMB && nx == stair_nx)
+			if (state == SIMON_STATE_STAIRCLIMB && e->obj->nx == stair_nx && stair_ny == -1)
 			{
 				SetState(SIMON_STATE_IDLE);
 				x = target_x - 8;
@@ -224,10 +227,17 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		}
 		if (dynamic_cast<StairBottom *>(e->obj))
 		{
-			target_x = e->obj->x;
-			stair_nx = e->obj->nx;
-			isOnStairBottom = true;
-			if (state == SIMON_STATE_STAIRCLIMB && nx == -stair_nx)
+			if (e->ny < 0)
+			{
+				target_x = e->obj->x;
+				if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
+				{
+					stair_nx = e->obj->nx;
+					isOnStairBottom = true;
+				}
+			}
+			else isOnStairBottom = false;
+			if (state == SIMON_STATE_STAIRCLIMB && e->obj->nx == stair_nx && stair_ny == 1)
 			{
 				SetState(SIMON_STATE_IDLE);
 				y-=dy; //pull up Simon by to avoid falling through bricks

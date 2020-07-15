@@ -281,6 +281,8 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	case DIK_8:
 		CGame::GetInstance()->SwitchScene(4, STAGE_4_X, STAGE_4_Y, -1);
 		break;
+	case DIK_9:
+		CGame::GetInstance()->SwitchScene(5, STAGE_5_X, STAGE_5_Y);
 	}
 }
 
@@ -339,7 +341,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		}
 		else
 		{
-			if (simon->isOnStairTop)
+			if (simon->isOnStairTop && (simon->GetState()<SIMON_STATE_STAIRIDLE || simon->GetState()>SIMON_STATE_STAIRCLIMB))
 			{
 				if (!simon->isWalkingtoStair && !simon->isJump)
 				{
@@ -355,7 +357,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 		}
 		if (game->IsKeyDown(DIK_UP))
 		{
-			if (simon->isOnStairBottom && !simon->isJump)
+			if (simon->isOnStairBottom && !simon->isJump && (simon->GetState() < SIMON_STATE_STAIRIDLE || simon->GetState() > SIMON_STATE_STAIRCLIMB))
 			{
 				if (!simon->isWalkingtoStair)
 				{

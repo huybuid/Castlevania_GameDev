@@ -15,11 +15,11 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == BAT_STATE_FLY)
 	{
 		x += dx;
-		if (y <= start_y + BAT_TRIGGER_Y)
+		if (y + dy <= start_y + BAT_TRIGGER_Y + 8)
 			y += dy;
 		else
 		{
-			y = start_y + BAT_TRIGGER_Y;
+			y = start_y + BAT_TRIGGER_Y + 8;
 			vy = 0;
 		}
 	}
