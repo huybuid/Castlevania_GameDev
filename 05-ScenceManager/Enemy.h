@@ -10,6 +10,7 @@ public:
 	int GetHp() { return hp; };
 	void SetHp(int x) { hp = x; };
 	virtual void Destroy() =0;
+	void Damage(int dmg);
 	~CEnemy();
 };
 

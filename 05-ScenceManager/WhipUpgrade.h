@@ -11,10 +11,16 @@ class WhipUpgrade :
 {
 public:
 
-	WhipUpgrade() :CItem() {
+	WhipUpgrade(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(WHIPUPGRADE_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};
 	~WhipUpgrade() {};
-	void Destroy() override { CItem::Destroy(); ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer()->level++; };
+	void Destroy() override 
+	{ 
+		CItem::Destroy();
+		CSimon *simon = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+		if (simon->level < 2)
+			simon->level++;
+	};
 };

@@ -23,3 +23,20 @@
 #define ANIMATION_SET_BOTTLE	23
 #define ANIMATION_SET_ROSARY	24
 
+#define STAGE_1_X 50
+#define STAGE_1_Y 129
+
+#define STAGE_2_X 30
+#define STAGE_2_Y 145
+
+#define STAGE_3_X 450
+#define STAGE_3_Y 80
+
+#define STAGE_4_X 704
+#define STAGE_4_Y 127
+
+#define STAGE_5_X
+#define STAGE_5_Y
+
+#define STAGE_6_X
+#define STAGE_6_Y

@@ -2,6 +2,9 @@
 #include "Brick.h"
 #include "FirePillar.h"
 #include "Portal.h"
+#include "StairBottom.h"
+#include "StairTop.h"
+#include "Bat.h"
 
 CGrid* CGrid::__instance = NULL;
 
@@ -21,6 +24,13 @@ void CGrid::Insert(int object, int grid_x, int grid_y, float x, float y, float w
 	cells[grid_x][grid_y].push_back(obj);
 }
 
+void CGrid::Insert(CGameObject * object, int grid_x, int grid_y)
+{
+	if (object == NULL)
+		return;
+	cells[grid_x][grid_y].push_back(object);
+}
+
 CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h, int n, int type,  int id_item)
 {
 	switch (object)
@@ -29,11 +39,15 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 		return new CBrick(x, y, w, h);
 	case 2:
 		return new FirePillar(x, y, type, id_item);
+	case 3:
+		return new StairTop(x,y,n);
+	case 4:
+		return new StairBottom(x, y, n);
+	case 5:
+		//return new Bat();
 	case 50:
 		return new CPortal(x, y, w, h, type);
-	/*case STAIR_DOWN: return new CHidenObject(x, y, type, trend, -1);
-	case STAIR_UP: return new CHidenObject(x, y, type, trend, 1);
-	case PORTAL: return new CGate(x, y);
+	/*case PORTAL: return new CGate(x, y);
 	case PANTHER: return new CPanther(x, y, id_item);
 	case FISHMEN: return new CFishman(x, y, id_item);
 	case GHOST: return new CGhost(x, y, id_item);
@@ -52,6 +66,12 @@ void CGrid::GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_
 
 	int top = (int)(cam_y) / GRID_CELL_HEIGHT;
 	int bottom = (int)(cam_y + SCREEN_HEIGHT) / GRID_CELL_HEIGHT;
+	int height = GRID_CELL_HEIGHT;
+	int width = GRID_CELL_WIDTH;
+	/*if ((int)(cam_y) % height == 0 )
+	{
+		bottom--;
+	}*/
 
 
 	int left = (int)(cam_x) / GRID_CELL_WIDTH;

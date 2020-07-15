@@ -10,13 +10,16 @@ class WeaponUpgrade :
 {
 public:
 
-	WeaponUpgrade() :CItem() {
+	WeaponUpgrade(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(WEAPONUPGRADE_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};
 	~WeaponUpgrade() {};
 	void Destroy() override {
-		CItem::Destroy(); ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer()->weapon_level++;
+		CItem::Destroy(); 
+		CSimon *simon = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer(); 
+		if (simon->weapon_level<3)
+			simon->weapon_level++;
 	};
 };
 

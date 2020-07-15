@@ -20,18 +20,19 @@ void Whip::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 	if (tick - attack_start > 200 && tick - attack_start <= 300)
 	{
 		if (isHit) return; //Temporary solution: locks if already calculated collisions
-		vector<LPGAMEOBJECT> coResults;
+		vector<LPCOLLISIONEVENT> coResults;
 		coResults.clear();
 		CalcPotentialObjectsOverlapsed(coObjects, coResults);
 		if (coResults.size() > 0) //
 		{
+			int dmg = GetDamage();
 			for (UINT i = 0; i < coResults.size(); i++)
 			{
-				LPGAMEOBJECT e = coResults[i];
-				if (dynamic_cast<FirePillar *>(e)) //if object is FirePillar
+				LPCOLLISIONEVENT e = coResults[i];
+				if (dynamic_cast<CEnemy *>(e->obj)) //if object is FirePillar
 				{
-					FirePillar *pillar = dynamic_cast<FirePillar *>(e);
-					pillar->Destroy();
+					CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
+					target->Damage(dmg);
 				}
 			}
 		}

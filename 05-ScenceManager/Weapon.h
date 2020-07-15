@@ -11,7 +11,9 @@ class CWeapon :
 public:
 	CWeapon();
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
-	void CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects, vector<LPGAMEOBJECT> &coResults);
+	void CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects, vector<LPCOLLISIONEVENT> &coResults);
+	bool isOutOfScreen(int obj_width, int obj_height);
+	virtual int GetDamage()=0;
 	~CWeapon();
 };
 

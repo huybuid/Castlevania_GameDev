@@ -9,7 +9,7 @@ class Chicken :
 {
 public:
 
-	Chicken() :CItem() {
+	Chicken(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(CHICKEN_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};

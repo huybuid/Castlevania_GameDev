@@ -1,5 +1,5 @@
 #include "HolyWater.h"
-
+#include "Enemy.h"
 void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -48,6 +48,22 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			animation_set->at(1)->SetCurrentFrame();
 			isActive = false;
 			burn_time = 0;
+		}
+	}
+	vector<LPCOLLISIONEVENT> coResults;
+	coResults.clear();
+	CalcPotentialObjectsOverlapsed(coObjects, coResults);
+	if (coResults.size() > 0) //
+	{
+		int dmg = GetDamage();
+		for (UINT i = 0; i < coResults.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coResults[i];
+			if (dynamic_cast<CEnemy *>(e->obj)) //if object is FirePillar
+			{
+				CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
+				target->Damage(dmg);
+			}
 		}
 	}
 }

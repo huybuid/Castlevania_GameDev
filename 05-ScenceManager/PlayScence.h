@@ -6,9 +6,6 @@
 #include "Scence.h"
 #include "GameObject.h"
 #include "Brick.h"
-#include "Mario.h"
-#include "Goomba.h"
-#include "Koopas.h"
 #include "Simon.h"
 
 #define CAM_X_SETVALUE	160
@@ -23,11 +20,6 @@ protected:
 	CSimon * player;
 	Background background;
 	
-
-	void _ParseSection_TEXTURES(string line);
-	void _ParseSection_SPRITES(string line);
-	void _ParseSection_ANIMATIONS(string line);
-	void _ParseSection_ANIMATION_SETS(string line);
 	void _ParseSection_OBJECTS(string line);
 	void _ParseSection_BACKGROUND(string line);
 
@@ -42,6 +34,10 @@ public:
 	virtual void Render();
 	virtual void Unload();
 	CSimon * GetPlayer() { return player; };
+	void SetPlayer(CSimon *s) 
+	{ if (s!=NULL) 
+		player = new CSimon(s); 
+	};
 	//friend class CPlayScenceKeyHandler;
 };
 

@@ -38,9 +38,11 @@ void Background::Render(float x, float y)
 	int m = y / BG_HEIGHT;
 	for (int i = m; i < m + 6; i++)
 	{
-		for (int j = n; j < n + 11; j++)
+		if (i >= rows) continue;
+		for (int j = n; j < n + 9; j++)
 		{
-			if (i * columns + j < tiles.size())
+			if (j >= columns) continue;
+			if ((i * columns + j) < tiles.size())
 				tiles[i * columns + j]->Render(j * BG_HEIGHT, i * BG_WIDTH, -1, 255);
 		}
 	}

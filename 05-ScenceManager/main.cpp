@@ -20,9 +20,7 @@
 #include "GameObject.h"
 #include "Textures.h"
 
-#include "Mario.h"
 #include "Brick.h"
-#include "Goomba.h"
 
 #include "PlayScence.h"
 
@@ -31,7 +29,7 @@
 
 #define BACKGROUND_COLOR D3DCOLOR_XRGB(0, 0, 0)
 
-#define MAX_FRAME_RATE 240
+#define MAX_FRAME_RATE 60
 
 CGame *game;
 

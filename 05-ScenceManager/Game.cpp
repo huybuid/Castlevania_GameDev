@@ -65,7 +65,7 @@ void CGame::Init(HWND hWnd)
 */
 void CGame::Draw(float x, float y, LPDIRECT3DTEXTURE9 texture, int left, int top, int right, int bottom, int alpha)
 {
-	D3DXVECTOR3 p(x - cam_x, y - cam_y, 0);
+	D3DXVECTOR3 p(floor(x - cam_x), floor(y - cam_y), 0);
 	RECT r; 
 	r.left = left;
 	r.top = top;
@@ -494,21 +494,28 @@ void CGame::Load(LPCWSTR gameFile)
 
 	DebugOut(L"[INFO] Loading game file : %s has been loaded successfully\n",gameFile);
 
-	SwitchScene(current_scene);
+	SwitchScene(current_scene, STAGE_1_X, STAGE_1_Y);
 }
 
-void CGame::SwitchScene(int scene_id)
+void CGame::SwitchScene(int scene_id, float x, float y, int nx, int state)
 {
 	DebugOut(L"[INFO] Switching to scene %d\n", scene_id);
 
 	scenes[current_scene]->Unload();
-
+	CSimon *player = dynamic_cast<CPlayScene *>(scenes[current_scene])->GetPlayer();
 	//CTextures::GetInstance()->Clear();
 	//CSprites::GetInstance()->Clear();
 	//CAnimations::GetInstance()->Clear();
 
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
+	if (player != NULL)
+	{
+		dynamic_cast<CPlayScene *>(s)->SetPlayer(player);
+		dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetPosition(x, y);
+		dynamic_cast<CPlayScene *>(s)->GetPlayer()->nx = nx;
+		dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetState(state);
+	}
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();	
 }

@@ -1,10 +1,30 @@
 #include "Dagger.h"
-
+#include "Enemy.h"
 void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CWeapon::Update(dt, coObjects);
 	x += dx;
 	y += dy;
+	if (isOutOfScreen(DAGGER_BBOX_WIDTH, DAGGER_BBOX_HEIGHT))
+	{
+		isActive = false;
+	}
+	vector<LPCOLLISIONEVENT> coResults;
+	coResults.clear();
+	CalcPotentialObjectsOverlapsed(coObjects, coResults);
+	if (coResults.size() > 0) //
+	{
+		int dmg = GetDamage();
+		for (UINT i = 0; i < coResults.size(); i++)
+		{
+			LPCOLLISIONEVENT e = coResults[i];
+			if (dynamic_cast<CEnemy *>(e->obj)) //if object is FirePillar
+			{
+				CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
+				target->Damage(dmg);
+			}
+		}
+	}
 }
 
 void Dagger::Render()

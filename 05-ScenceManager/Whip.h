@@ -9,6 +9,7 @@
 #define WHIP_STATE_ATTACK			1
 
 #define WHIP_ANI_CYCLE			100
+#define WHIP_DAMAGE	2
 
 #define WHIP_BACK_POSITION_LEFT 0
 #define WHIP_BACK_POSTION_RIGHT 0
@@ -44,6 +45,7 @@ public:
 		isAttack = false;
 		level = 0;
 		attack_start = 0;
+		SetAnimationSet(CAnimationSets::GetInstance()->Get(3));
 	}
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();
@@ -55,6 +57,7 @@ public:
 		isHit = false;
 		isAttack = 1; attack_start = GetTickCount();
 	}
+	virtual int GetDamage() { if (level < 1) return WHIP_DAMAGE; return WHIP_DAMAGE + 1; }
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
 	~Whip() { };
 };

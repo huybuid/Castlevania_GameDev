@@ -90,8 +90,16 @@ void CGameObject::CalcPotentialInteractions(
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		if (!coObjects->at(i)->isActive || !coObjects->at(i)->isInteractive) continue; //if object is not active or can't be colided, continue
-		LPCOLLISIONEVENT e = SweptAABBEx(coObjects->at(i));
-
+		LPCOLLISIONEVENT e;
+		bool b = isAABB(coObjects->at(i));
+		if (b)
+		{
+			e = AABB(coObjects->at(i));
+		}
+		else
+		{
+			e = SweptAABBEx(coObjects->at(i));
+		}
 		if (e->t > 0 && e->t <= 1.0f)
 			inEvents.push_back(e);
 		else
@@ -165,6 +173,50 @@ void CGameObject::FilterCollision(
 
 	if (min_ix>=0) coEventsResult.push_back(coEvents[min_ix]);
 	if (min_iy>=0) coEventsResult.push_back(coEvents[min_iy]);
+}
+
+LPCOLLISIONEVENT CGameObject::AABB(LPGAMEOBJECT obj)
+{
+	float tt, tl, tb, tr;
+	this->GetBoundingBox(tl, tt, tr, tb);
+	float l, t, r, b;
+	obj->GetBoundingBox(l, t, r, b);
+
+	float time = -1;
+	int nx, ny;
+	if (tl >= r || l >= tr || tt >= b || t >= tb)
+	{
+		nx = 0;
+		ny = 0;
+	}
+	else
+	{
+		time = 0.00000001f;
+		if (tl < l)
+			nx = -1;
+		else
+			nx = -1;
+		if (tb < b)
+			ny = -1;
+		else
+			ny = 1;
+	}
+	return new CCollisionEvent(time,nx,ny,0,0,obj);
+}
+
+bool CGameObject::isAABB(LPGAMEOBJECT obj)
+{
+	float tt, tl, tb, tr;
+	this->GetBoundingBox(tl, tt, tr, tb);
+	float l, t, r, b;
+	obj->GetBoundingBox(l, t, r, b);
+	if (tl >= r || l >= tr)
+		return false;
+
+	// If one rectangle is above other 
+	if (tt >= b || t >= tb)
+		return false;
+	return true;
 }
 
 

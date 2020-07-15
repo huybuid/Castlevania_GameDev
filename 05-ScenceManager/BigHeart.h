@@ -13,7 +13,7 @@ class BigHeart :
 {
 public:
 	
-	BigHeart():CItem() {
+	BigHeart(float x, float y):CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(BIGHEART_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};

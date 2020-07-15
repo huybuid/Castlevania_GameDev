@@ -17,7 +17,7 @@ class Background
 public:
 	vector<LPANIMATION> tiles;
 	string path;
-	int screen_limit;
+	float screen_limit;
 	void SetPath(string s)
 	{
 		path = s;

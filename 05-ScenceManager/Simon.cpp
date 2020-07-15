@@ -1,6 +1,5 @@
 #include "Simon.h"
 #include "Game.h"
-#include "Goomba.h"
 #include "Scence.h"
 #include "Portal.h"
 #include "Animations.h"
@@ -12,85 +11,143 @@
 #include "Axe.h"
 #include "Cross.h"
 #include "HolyWater.h"
+#include "StairTop.h"
+#include "StairBottom.h"
 
-CSimon::CSimon(float x, float y, float nx) : CGameObject()
+CSimon::CSimon(float x, float y, int nx, int state, int lvl, int h, int current_hp, int wp, int wp_lvl) : CSimon()
 {
-	level = 0;
-	untouchable = 0;
-	isJump = 0;
-	isAttack = 0;
-	isDuck = 0;
-	SetState(SIMON_STATE_IDLE);
-	heart = 5;
-	hp = SIMON_MAX_HP;
 	start_x = x;
 	start_y = y;
 	this->nx = nx;
 	this->x = x;
 	this->y = y;
-	this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_SIMON);
+	level = lvl;
+	SetState(state);
+	heart = h;
+	hp = current_hp;
+	weapon_indicator = wp;
+	weapon_level = wp_lvl;
+}
+
+CSimon::CSimon(CSimon * s):CSimon()
+{
+	level = s->level;
+	heart = s->heart;
+	hp = s->hp;
+	if (s->state == SIMON_STATE_STAIRCLIMB)
+	{
+		stair_nx = s->stair_nx;
+		stair_ny = s->stair_ny;
+	}
+	weapon_indicator = s->weapon_indicator;
+	weapon_level = s->weapon_level;
 }
 
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
 	CGameObject::Update(dt);
-
-	// Simple fall down
-	vy += SIMON_JUMP_GRAVITY * dt;
-
-	vector<LPCOLLISIONEVENT> coEvents;	//Collision Events
-	vector<LPCOLLISIONEVENT> coEventsResult;
-	vector<LPCOLLISIONEVENT> inEvents;	//Interaction (with items) Events
-	vector<LPGAMEOBJECT> *inObjects = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items;
-	coEvents.clear();
-	inEvents.clear();
-	// turn off collision when dead 
-	if (state != SIMON_STATE_DIE || untouchable)
-		CalcPotentialCollisions(coObjects, coEvents);
-	CalcPotentialInteractions(inObjects, inEvents);
-	// reset untouchable timer if untouchable time has passed
 	DWORD tick = GetTickCount();
+	// reset untouchable timer if untouchable time has passed
 	if (tick - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
 		untouchable = 0;
 	}
-	if (tick - attack_start > SIMON_ATTACK_TIME && attack_start>0)
+	// reset attack if attack time has passed
+	if (tick - attack_start > SIMON_ATTACK_TIME && attack_start > 0)
 	{
 		if (isWeaponAttack)
 		{
-
 			switch (weapon_indicator)
 			{
 			case SIMON_WEAPON_AXE:
-				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Axe(x+8, y, nx));
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Axe(x + 8, y, nx));
 				break;
 			case SIMON_WEAPON_DAGGER:
-				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Dagger(x+8, y, nx));
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Dagger(x + 8, y, nx));
 				break;
 			case SIMON_WEAPON_CROSS:
-				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Cross(x+8, y, nx));
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new Cross(x + 8, y, nx));
 				break;
 			case SIMON_WEAPON_HOLYWATER:
-				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new HolyWater(x+12, y, nx));
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.push_back(new HolyWater(x + 12, y, nx));
+				break;
 			default:
 				break;
-			}
+		}
 		}
 		isAttack = 0;
 		attack_start = 0;
 		ResetAttackState();
 	}
+	if ((tick - jump_start > SIMON_JUMP_TIME) && (jump_start > 0))
+	{
+		jump_start = 0;
+		isFall = true;
+		if (!isAttack)
+		{
+			y -= 4;
+		}
+	}
+	vector<LPCOLLISIONEVENT> inEvents;	//Interaction (with items) Events
+	vector<LPGAMEOBJECT> *inObjects = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items;
+	inEvents.clear();
+	CalcPotentialInteractions(inObjects, inEvents);
+	CalcPotentialInteractions(coObjects, inEvents);
+	vector<LPCOLLISIONEVENT> enEvents; //Interaction (with enemies) Events
+	if (isOnStairTop || isOnStairBottom)
+	{
+		if (GetState() == SIMON_STATE_WALKING && target_x != TARGET_X_NaN && isWalkingtoStair)
+		{
+			if (nx <= 0) //Simon facing left
+			{
+				if (x+8 < target_x)
+				{
+					x = target_x-8;
+					nx = -stair_ny*stair_nx;
+					SetState(SIMON_STATE_STAIRIDLE);
+					isWalkingtoStair = false;
+				}
+			}
+			else
+			{
+				if (x+8 > target_x)
+				{
+					x = target_x-8;
+					nx = -stair_ny*stair_nx;
+					SetState(SIMON_STATE_STAIRIDLE);
+					isWalkingtoStair = false;
+				}
+			}
+		}
+	}
+	// Simple fall down
+	
 
-	// No collision occured, proceed normally
+	vector<LPCOLLISIONEVENT> coEvents;	//Collision Events
+	vector<LPCOLLISIONEVENT> coEventsResult;
+	coEvents.clear();
+	if (state != SIMON_STATE_STAIRATK && state != SIMON_STATE_STAIRIDLE && state != SIMON_STATE_STAIRCLIMB)
+	{
+		if (isJump && !isFall)
+			vy += SIMON_JUMP_GRAVITY * dt;
+		else vy += SIMON_GRAVITY * dt;
+		CalcPotentialCollisions(coObjects, coEvents);
+	}
+
+
+	// No collision occured => Simon is falling
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
+		isOnStairBottom = false;
+		isOnStairTop = false;
 	}
 	else
 	{
+
 		float min_tx, min_ty, nx = 0, ny;
 		float rdx = 0;
 		float rdy = 0;
@@ -103,19 +160,21 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//	x += nx*abs(rdx); 
 
 		// block every object first!
-		x += min_tx * dx + nx * 0.1f;
+		x += min_tx * dx + nx * 0.3f;
 		if (ny < 0)
-			y += min_ty * dy + ny * 0.1f;
+			y += min_ty * dy + ny * 0.3f;
 		else
-			y += dy + ny * 0.1f;
+			y += dy + ny * 0.3f;
 
 		if (nx != 0) vx = 0;
 		if (ny < 0)
 		{
+			isFall = false;
 			if (isJump)
 			{
 				vx = 0;
 				isJump = false;
+				jump_start = 0;
 				animation_set->at(SIMON_ANI_JUMP)->SetCurrentFrame();
 			}
 			vy = 0;
@@ -127,11 +186,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			//if collides with a portal
-			if (dynamic_cast<CPortal *>(e->obj))
-			{
-				CPortal *p = dynamic_cast<CPortal *>(e->obj);
-				CGame::GetInstance()->SwitchScene(p->GetSceneId());
-			}
+
 		}
 	}
 	if (inEvents.size()>0)
@@ -142,6 +197,43 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			CItem *item = dynamic_cast<CItem *>(e->obj);
 			item->Destroy();
+			continue;
+		}
+		if (dynamic_cast<CPortal *>(e->obj))
+		{
+			CPortal *p = dynamic_cast<CPortal *>(e->obj);
+			CGame::GetInstance()->SwitchScene(p->GetSceneId(),p->simon_x, p->simon_y, p->simon_nx, p->simon_state);
+			continue;
+		}
+		if (dynamic_cast<StairTop *>(e->obj))
+		{
+			if (e->ny > 0)
+			{
+				target_x = e->obj->x;
+				stair_nx = e->obj->nx;
+				isOnStairTop = true;
+			}
+			else
+				isOnStairTop = false;
+			if (state == SIMON_STATE_STAIRCLIMB && nx == stair_nx)
+			{
+				SetState(SIMON_STATE_IDLE);
+				x = target_x - 8;
+			}
+			continue;
+		}
+		if (dynamic_cast<StairBottom *>(e->obj))
+		{
+			target_x = e->obj->x;
+			stair_nx = e->obj->nx;
+			isOnStairBottom = true;
+			if (state == SIMON_STATE_STAIRCLIMB && nx == -stair_nx)
+			{
+				SetState(SIMON_STATE_IDLE);
+				y-=dy; //pull up Simon by to avoid falling through bricks
+				x = target_x - 8;
+			}
+			continue;
 		}
 	}
 	// clean up collision events
@@ -155,6 +247,13 @@ void CSimon::ResetAttackState()
 	whip->SetState(WHIP_STATE_DEACTIVATE);
 	animation_set->at(SIMON_ANI_DUCKATK)->SetCurrentFrame();
 	animation_set->at(SIMON_ANI_ATTACKING)->SetCurrentFrame();
+	animation_set->at(SIMON_ANI_STAIRUPATK)->SetCurrentFrame();
+	animation_set->at(SIMON_ANI_STAIRDOWNATK)->SetCurrentFrame();
+	if (state == SIMON_STATE_STAIRATK)
+	{
+		SetState(SIMON_STATE_STAIRIDLE);
+	}
+	else
 	if (GetState() == SIMON_STATE_ATTACKING || !isDuck)
 	{
 		SetState(SIMON_STATE_IDLE);
@@ -174,15 +273,40 @@ void CSimon::Render() {
 		ani = SIMON_ANI_DIE;
 	}
 	else {
-		//stand still => velocity x (vx = 0)
-
-		//Idle--------------------------------------
+		if (state >= SIMON_STATE_STAIRIDLE && state <= SIMON_STATE_STAIRCLIMB)
+		{
+			if (vx == 0)
+			{
+				if (isAttack)
+				{
+					if (stair_ny < 0)
+						ani = SIMON_ANI_STAIRUPATK;
+					else ani = SIMON_ANI_STAIRDOWNATK;
+				}
+				else
+				{
+					if (stair_ny < 0)
+					{
+							ani = SIMON_ANI_STAIRUPIDLE;
+					}
+					else ani = SIMON_ANI_STAIRDOWNIDLE;
+				}
+			}
+			else
+			{
+				if (stair_ny < 0)
+					ani = SIMON_ANI_STAIRUP;
+				else ani = SIMON_ANI_STAIRDOWN;
+			}
+		}
+		else
 		if (vx == 0)
 		{
 			//Attacking
-			if (state == SIMON_STATE_ATTACKING || state==SIMON_STATE_DUCKATK) {
+			if (state == SIMON_STATE_ATTACKING || state==SIMON_STATE_DUCKATK || state==SIMON_STATE_STAIRATK) {
 				if (state==SIMON_STATE_DUCKATK) ani = SIMON_ANI_DUCKATK;
-				else ani = SIMON_ANI_ATTACKING;
+				else	
+					ani = SIMON_ANI_ATTACKING;
 			}
 			//Ducking----------------------------------
 			else if (isDuck) {
@@ -192,7 +316,8 @@ void CSimon::Render() {
 			else if (isJump)
 				ani = SIMON_ANI_JUMP;
 			else {
-				ani = SIMON_ANI_IDLE;
+				if (state == SIMON_STATE_WALKING) ani = SIMON_ANI_WALKING;
+				else ani = SIMON_ANI_IDLE;
 			}
 		}
 
@@ -224,11 +349,14 @@ void CSimon::SetState(int state)
 	case SIMON_STATE_JUMP:
 		// TODO: need to check if SIMON is *current* on a platform before allowing to jump again
 		isJump = true;
+		jump_start = GetTickCount();
 		vy = -SIMON_JUMP_SPEED_Y;
 		break;
 	case SIMON_STATE_IDLE:
 		if (!isJump)
 			vx = 0;
+		if (prevstate == SIMON_STATE_STAIRCLIMB)
+			vy = 0;
 		isDuck = false;
 		break;
 	case SIMON_STATE_DUCKING:
@@ -244,11 +372,35 @@ void CSimon::SetState(int state)
 		if (isJump)
 		{
 			if (animation_set->at(SIMON_ANI_JUMP)->GetCurrentFrame() == 0)
-				y -= 8;
+				y -= 4;
 		}
 		else
 			vx = 0;
 	break;
+	case SIMON_STATE_WALKING:
+		vx = SIMON_WALKING_SPEED * nx;
+		break;
+	case SIMON_STATE_STAIRATK:
+		vx = 0;
+		vy = 0;
+		break;
+	case SIMON_STATE_STAIRCLIMB:
+		if (stair_ny > 0)
+		{
+			nx = -stair_nx;
+		}
+		else
+		{
+			nx = stair_nx;
+		}
+		vx = nx * SIMON_STAIR_SPEED;
+		vy = stair_ny * SIMON_STAIR_SPEED;
+		break;
+	case SIMON_STATE_STAIRIDLE:
+		vx = 0;
+		vy = 0;
+		dy = 0;
+		dx = 0;
 	}
 }
 
@@ -257,15 +409,15 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x+8;
 	top = y;
 
-	if (!isDuck)
-	{
-		right = left + SIMON_IDLE_BBOX_WIDTH;
-		bottom = y + SIMON_STANDING_BBOX_HEIGHT;
-	}
-	else
+	if (isDuck || (isJump && !isFall))
 	{
 		right = left + SIMON_DUCKING_BBOX_WIDTH;
 		bottom = y + SIMON_DUCKING_BBOX_HEIGHT;
+	}
+	else
+	{
+		right = left + SIMON_IDLE_BBOX_WIDTH;
+		bottom = y + SIMON_STANDING_BBOX_HEIGHT;
 	}
 }
 
@@ -273,32 +425,43 @@ void CSimon::StartAttackSequence(bool isWhipAtk)
 {
 		isAttack = 1;
 		attack_start = GetTickCount();
-		if (isWhipAtk || current_weapon_count >= weapon_level || weapon_indicator == SIMON_WEAPON_NONE || weapon_indicator == SIMON_WEAPON_STOPWATCH)
+		int current_weapon_count = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->weapons.size();
+		if (isWhipAtk || current_weapon_count >= weapon_level || weapon_indicator == SIMON_WEAPON_NONE || weapon_indicator == SIMON_WEAPON_STOPWATCH || heart<=0)
 			whip->SetState(WHIP_STATE_ATTACK);
 		else
 		{
 			isWeaponAttack = true;
+			heart--;
 		}
 		if (weapon_indicator == SIMON_WEAPON_STOPWATCH)
 		{
-			//Stop time
+			if (heart >= 5)
+			{
+				//Stop time
+				heart -= 5;
+			}
+		}
+		if (state >= SIMON_STATE_STAIRIDLE && state <= SIMON_STATE_STAIRCLIMB)
+		{
+			SetState(SIMON_STATE_STAIRATK);
+			return;
 		}
 		if (isDuck)
 			SetState(SIMON_STATE_DUCKATK);
-		else SetState(SIMON_STATE_ATTACKING);
+		else
+			SetState(SIMON_STATE_ATTACKING);
 }
 
 /*
 	Reset SIMON status to the beginning state of a scene
 */
-void CSimon::Reset(float reset_x, float reset_y, float nx)
+void CSimon::Reset(float reset_x, float reset_y, int nx, int state)
 {
-	SetState(SIMON_STATE_IDLE);
+	SetState(state);
 	start_x = reset_x;
 	start_y = reset_y;
 	this->nx = nx;
 	SetPosition(reset_x, reset_y);
-	SetSpeed(0, 0);
 }
 
 void CSimon::HardReset()
@@ -309,6 +472,23 @@ void CSimon::HardReset()
 	hp = SIMON_MAX_HP;
 	heart = 5;
 	weapon_level = 0;
+}
+
+void CSimon::SetWeapon(int indicator)
+{
+	weapon_indicator = indicator;
+	weapon_level = 1;
+}
+
+void CSimon::Walk(bool isUp)
+{
+	isWalkingtoStair = true;
+	if (target_x < x)
+		nx = -1;
+	else  if (target_x > x) nx = 1;
+	else  if (isUp) nx = -stair_nx;
+	else nx = stair_nx;
+	SetState(SIMON_STATE_WALKING);
 }
 
 

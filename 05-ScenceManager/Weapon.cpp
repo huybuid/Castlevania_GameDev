@@ -1,26 +1,40 @@
 #include "Weapon.h"
 #include "Enemy.h"
+#include "Game.h"
+#include "PlayScence.h"
 
 void CWeapon::CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects,
-	vector<LPGAMEOBJECT> &coResults)
+	vector<LPCOLLISIONEVENT> &coResults)
 {
-	float tl, tt, tr, tb; //weapon's coordinates
-	this->GetBoundingBox(tl, tt, tr, tb);
+
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
 		if (!coObjects->at(i)->isAttackable) continue; //if we can't attack object then continue
-		float l, t, r, b;
-		coObjects->at(i)->GetBoundingBox(l, t, r, b);
-		// If one rectangle is on left side of other 
-		if (tl >= r || l >= tr)
-			continue;
-
-		// If one rectangle is above other 
-		if (tt >= b || t >= tb)
-			continue;
+		LPCOLLISIONEVENT e;
+		if (this->isAABB(coObjects->at(i)))
+		{
+			e = AABB(coObjects->at(i));
+		}
 		else
-			coResults.push_back(coObjects->at(i));
+		{
+			e = SweptAABBEx(coObjects->at(i));
+		}
+		if (e->t > 0 && e->t <= 1.0f)
+			coResults.push_back(e);
+		else
+			delete e;
 	}
+}
+
+bool CWeapon::isOutOfScreen(int obj_width, int obj_height)
+{
+	float cam_x, cam_y;
+	CGame::GetInstance()->GetCamPos(cam_x, cam_y);
+	if (this->x <= cam_x || this->x + obj_width >= cam_x + SCREEN_WIDTH || this->y <=cam_y || this->y + obj_height >= cam_y + SCREEN_HEIGHT)
+	{
+		return true;
+	}
+	return false;
 }
 
 CWeapon::CWeapon() : CGameObject()

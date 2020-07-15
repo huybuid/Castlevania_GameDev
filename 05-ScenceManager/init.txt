@@ -1,14 +1,18 @@
 [SETTINGS]
 
-start	2
+start	1
 #id	file_path	transparent_color_r	g	b
 [TEXTURES]
+99	textures\title.png	0	0	0	
 0	textures\simon1.png	116	116	116
 10	textures\creeps.png	116	116	116
 20	textures\items.png	116	116	116
 30	Scene1\results.png	0	0	0
 40	Scene2\results.png	0	0	0
 50	Scene3\results.png	0	0	0
+60	Scene4\results.png	0	0	0
+70	Scene5\results.png	0	0	0
+80	Scene6\results.png	0	0	0
 # id	left	top	right	bottom	texture_id
 
 [SPRITES]
@@ -35,19 +39,19 @@ start	2
 #attack					
 1013	1	78	33	110	0
 1014	34	78	66	110	0
-1015	69	78	101	110	0
+1015	67	78	99	110	0
 #attack/ducking					
 1016	139	78	171	110	0
 1017	172	78	204	110	0
-1018	207	78	239	110	0
+1018	205	78	237	110	0
 #attacking/ascend					
 1019	285	78	317	110	0
-1020	310	78	342	110	0
-1021	345	78	377	110	0
+1020	318	78	350	110	0
+1021	351	78	383	110	0
 #attacking/descend					
 1022	431	78	463	110	0
 1023	464	78	496	110	0
-1024	499	78	531	110	0
+1024	497	78	529	110	0
 #whip 1
 1101	0	477	112	509	0
 1102	80	477	192	501	0
@@ -149,8 +153,20 @@ start	2
 105	1005	400	1001	400
 #hurt
 106	1010	100
+#stair-up-idle
+107	1006	100
+#stair-up
+108	1006	100	1007	100
+#stair-up=atk
+109	1019	100	1020	100	1021	100
+#stair-down-idle
+110	1008	100
+#stair-down-idle
+111	1008	100	1009	100
+#stair-down-atk
+112	1022	100	1023	100	1024	100
 #death
-107	1011	100	1012	100
+113	1011	100	1012	100
 #==BRICK
 200	3000	100
 #==WHIP
@@ -160,7 +176,7 @@ start	2
 #DAGGER
 303	1151	100
 #CROSS
-304	1161	100	1163	100	1162	100
+304	1161	50	1163	50	1162	50
 #AXE
 305	1171	50	1172	50	1173	50	1174	50
 #HOLYWATER
@@ -205,7 +221,7 @@ start	2
 417	4017	100
 [ANIMATION_SETS]
 #SIMON
-1	100	101	102	103	104	105
+1	100	101	102	103	104	105	106	107	108	109	110	111	112	113
 #BRICK
 2	200
 #WHIP

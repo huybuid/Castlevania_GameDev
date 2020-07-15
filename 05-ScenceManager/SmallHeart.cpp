@@ -1,8 +1,39 @@
 #include "SmallHeart.h"
 
+void SmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
+{
+	if (!isActive) return;
+	CGameObject::Update(dt);
+	vector<LPCOLLISIONEVENT> coEvents;
+	vector<LPCOLLISIONEVENT> coEventsResult;
+
+	coEvents.clear();
+	CalcPotentialCollisions(coObjects, coEvents);
+	if (coEvents.size() == 0)
+	{
+		x += dx;
+		y += dy;
+	}
+	else
+	{
+		float min_tx, min_ty, nx = 0, ny;
+		float rdx = 0;
+		float rdy = 0;
+
+		FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
+
+		if (ny != 0) vx = vy = 0;
+	}
+	if (x <= limit_left || x >= limit_right)
+	{
+		vx = -vx;
+	}
+}
+
 void SmallHeart::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
-	CItem::GetBoundingBox(left, top, right, bottom);
-	right = x + HEART_BBOX_WIDTH;
-	bottom = y + HEART_BBOX_HEIGHT;
+	top = y;
+	left = x;
+	right = x + SMALLHEART_BBOX_WIDTH;
+	bottom = y + SMALLHEART_BBOX_HEIGHT;
 }

@@ -18,6 +18,7 @@ class CGrid
 public:
 	static CGrid* GetInstance();
 	void Insert(int object, int grid_x, int grid_y, float x, float y, float w, float h, int n, int type, int id_item);
+	void Insert(CGameObject *object, int grid_x, int grid_y);
 	CGameObject* GetNewObject(int object, float x, float y, float w, float h, int n, int type, int id_item);
 	void GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_y);
 	void Clear();

@@ -3,7 +3,7 @@
 #include "define.h"
 
 #define DAGGER_SPEED_X 0.2f
-
+#define DAGGER_DAMAGE 2
 #define DAGGER_BBOX_HEIGHT	16
 #define DAGGER_BBOX_WIDTH	16
 class Dagger :
@@ -19,5 +19,6 @@ public:
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	virtual void Render();
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	int GetDamage() { return DAGGER_DAMAGE; }
 };
 

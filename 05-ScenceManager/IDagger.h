@@ -10,7 +10,7 @@ class IDagger :
 {
 public:
 
-	IDagger() :CItem() {
+	IDagger(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(IDAGGER_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};

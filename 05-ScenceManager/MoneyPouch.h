@@ -10,7 +10,7 @@ class MoneyPouch :
 {
 public:
 
-	MoneyPouch() :CItem() {
+	MoneyPouch(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(MONEYPOUCH_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};

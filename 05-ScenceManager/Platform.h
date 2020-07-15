@@ -1,8 +1,9 @@
 #pragma once
-class Platform
+#include "Brick.h"
+class Platform: public CBrick 
 {
 public:
-	Platform();
+	Platform() :CBrick() {};
 	~Platform();
 };
 

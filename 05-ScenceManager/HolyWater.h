@@ -4,8 +4,8 @@
 
 #define HOLYWATER_SPEED_X 0.12f
 #define HOLYWATER_SPEED_Y -0.055f
-#define HOLYWATER_GRAVITY	0.0005f
-
+#define HOLYWATER_GRAVITY	0.0004f
+#define HOLYWATER_DAMAGE 3
 #define HOLYWATER_STATE_BOTTLE	0
 #define HOLYWATER_STATE_BURN	1
 
@@ -37,5 +37,6 @@ public:
 	};
 	int GetState() { return state; };
 	virtual void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	int GetDamage() { return HOLYWATER_DAMAGE; }
 };
 

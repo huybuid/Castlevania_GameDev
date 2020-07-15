@@ -44,7 +44,6 @@ void FirePillar::Destroy()
 	if (item_id != 0)
 	{
 		CItem *item = SpawnItem(item_id);
-		item->SetPosition(this->x, this->y);
 		((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items.push_back(item);
 	}
 	isActive = false;
@@ -55,35 +54,34 @@ CItem *FirePillar::SpawnItem(int i)
 	switch (i)
 	{
 	case 1:
-		return new SmallHeart();
-		break;
+		return new SmallHeart(this->x, this->y);
 	case 2:
-		return new BigHeart();
+		return new BigHeart(this->x, this->y);
 	case 3:
-		return new WhipUpgrade();
+		return new WhipUpgrade(this->x, this->y);
 	case 4:
-		return new IAxe();
+		return new IAxe(this->x, this->y);
 	case 5:
-		return new ICross();
+		return new ICross(this->x, this->y);
 	case 6:
-		return new IDagger();
+		return new IDagger(this->x, this->y);
 	case 7:
-		return new IHolyWater();
+		return new IHolyWater(this->x, this->y);
 	case 8:
-		return new StopWatch();
+		return new StopWatch(this->x, this->y);
 	case 9:
-		return new MoneyPouch();
+		return new MoneyPouch(this->x, this->y);
 	case 10:
-		return new Rosary();
+		return new Rosary(this->x, this->y);
 	case 11:
-		return new WeaponUpgrade();
+		return new WeaponUpgrade(this->x, this->y);
 	case 12:
-		return new InvincibleBottle();
+		return new InvincibleBottle(this->x, this->y);
 	case 13:
-		return new Orb();
+		return new Orb(this->x, this->y);
 	case 14:
-		return new Chicken();
+		return new Chicken(this->x, this->y);
 	default:
-		break;
+		return NULL;
 	}
 }

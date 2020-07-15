@@ -27,6 +27,7 @@ class CItem :
 
 public:
 	CItem() :CGameObject() { isInteractive = true; };
+	CItem(float x, float y) :CItem() { SetPosition(x, y); };
 	~CItem() {};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects);
 	virtual void Render();

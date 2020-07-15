@@ -1,13 +1,21 @@
 #include "Portal.h"
 
 
-CPortal::CPortal(float l, float t, float r, float b, int scene_id )
+CPortal::CPortal(float l, float t, float r, float b, int scene_id, float x, float y, int nx, int state ):CPortal(l,t,r,b,scene_id)
+{
+	this->simon_nx = nx;
+	this->simon_x = x;
+	this->simon_y = y;
+	this->simon_state = state;
+}
+
+CPortal::CPortal(float l, float t, float r, float b, int scene_id)
 {
 	isActive = true;
-	isCollidable = true;
+	isInteractive = true;
 	this->scene_id = scene_id;
-	x = l; 
-	y = t;
+	this->x = l;
+	this->y = t;
 	width = r;
 	height = b;
 }

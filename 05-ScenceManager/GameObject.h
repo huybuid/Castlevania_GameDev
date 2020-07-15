@@ -10,7 +10,7 @@
 
 using namespace std;
 
-#define ID_TEX_BBOX -100		// special texture to draw object bounding box
+#define ID_TEX_BBOX 99		// special texture to draw object bounding box
 
 class CGameObject; 
 typedef CGameObject * LPGAMEOBJECT;
@@ -20,7 +20,8 @@ typedef CCollisionEvent * LPCOLLISIONEVENT;
 struct CCollisionEvent
 {
 	LPGAMEOBJECT obj;
-	float t, nx, ny;
+	float t;
+	float nx, ny;		// *RELATIVE* direction of the collision
 	float dx, dy;		// *RELATIVE* movement distance between this object and obj
 
 	CCollisionEvent(float t, float nx, float ny, float dx = 0, float dy = 0, LPGAMEOBJECT obj = NULL) 
@@ -87,6 +88,9 @@ public:
 		float &ny, 
 		float &rdx, 
 		float &rdy);
+
+	LPCOLLISIONEVENT AABB(LPGAMEOBJECT obj);
+	bool isAABB(LPGAMEOBJECT obj);
 
 	CGameObject();
 

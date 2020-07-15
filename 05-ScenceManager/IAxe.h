@@ -10,7 +10,7 @@ class IAxe :
 {
 public:
 
-	IAxe() :CItem() {
+	IAxe(float x, float y) :CItem(x,y) {
 		LPANIMATION_SET ani_set = CAnimationSets::GetInstance()->Get(IAXE_ANIMATION_SET);
 		SetAnimationSet(ani_set);
 	};

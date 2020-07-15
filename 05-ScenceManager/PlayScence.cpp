@@ -54,7 +54,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
-	if (tokens.size() < 8) return; // skip invalid lines - an object set must have at least id, x, y
+	if (tokens.size() < 11) return; // skip invalid lines - an object set must have all values
 
 	int object_type = atoi(tokens[0].c_str());
 	int grid_x = atoi(tokens[1].c_str());
@@ -69,11 +69,21 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 
 	int ani_set_id = atoi(tokens[3].c_str());
 
+
 	CAnimationSets * animation_sets = CAnimationSets::GetInstance();
 
 	CGameObject *obj = NULL;
 
 	CItem *item = NULL;
+
+	if (tokens.size() > 14)
+	{
+		float simon_x = atof(tokens[11].c_str());
+		float simon_y = atof(tokens[12].c_str());
+		int simon_nx = atoi(tokens[13].c_str());
+		int simon_state = atoi(tokens[14].c_str());
+		obj = new CPortal(x, y, w, h, type, simon_x, simon_y, simon_nx, simon_state);
+	}
 
 	switch (object_type)
 	{
@@ -81,14 +91,15 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		if (player!=NULL) 
 		{
 			DebugOut(L"[ERROR] SIMON object was created before, starting soft-reset!\n");
-			player->Reset(x,y, nx);
+			player->Reset(x, y, nx, type);
 			return;
 		}
-		obj = new CSimon(x, y, nx);
+		obj = new CSimon(x, y, nx, type);
 		player = (CSimon*)obj;
-		player->whip = new Whip();
-		player->whip->SetAnimationSet(animation_sets->Get(3));
 		DebugOut(L"[INFO] Player object created!\n");
+		break;
+	case OBJECT_TYPE_PORTAL:
+		CGrid::GetInstance()->Insert(obj, grid_x, grid_y);
 		break;
 	default:
 		CGrid::GetInstance()->Insert(object_type, grid_x, grid_y, x, y, w, h, nx, type, item_id);
@@ -163,6 +174,13 @@ void CPlayScene::Update(DWORD dt)
 	{
 		weapons[i]->Update(dt, &coObjects);
 	}
+	size_t j = 0;
+	while (j < weapons.size() )
+	{
+		if (!weapons[j]->isActive)
+			weapons.erase(weapons.begin()+j);
+		else j++;
+	}
 	for (size_t i = 0; i < coObjects.size(); i++)
 	{
 		coObjects[i]->Update(dt, &coObjects);
@@ -224,26 +242,44 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
-	/* CMario *mario = ((CPlayScene*)scence)->GetPlayer()
-	switch (KeyCode)
-	{
-	case DIK_SPACE:
-		mario->SetState(MARIO_STATE_JUMP);
-		break;
-	case DIK_A: 
-		mario->Reset();
-		break;
-	} */
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if (!simon->isAttack && !simon->isDuck && !simon->isJump)
+		if ((simon->GetState()==SIMON_STATE_IDLE ||simon->GetState()==SIMON_STATE_WALKING) && !simon->isJump)
 		{
 			simon->SetState(SIMON_STATE_JUMP);
 		}
 		break;
 	case DIK_A:
 		simon->Reset(simon->start_x, simon->start_y);
+		break;
+	case DIK_Z:
+		if (!simon->isAttack)
+			simon->StartAttackSequence(!CGame::GetInstance()->IsKeyDown(DIK_UP)); //if the UP key is pressed, try to fire extra weapon
+		break;
+	case DIK_1:
+		simon->SetWeapon(SIMON_WEAPON_DAGGER);
+		break;
+	case DIK_2:
+		simon->SetWeapon(SIMON_WEAPON_AXE);
+		break;
+	case DIK_3:
+		simon->SetWeapon(SIMON_WEAPON_CROSS);
+		break;
+	case DIK_4:
+		simon->SetWeapon(SIMON_WEAPON_HOLYWATER);
+		break;
+	case DIK_5:
+		CGame::GetInstance()->SwitchScene(1, STAGE_1_X, STAGE_1_Y);
+		break;
+	case DIK_6:
+		CGame::GetInstance()->SwitchScene(2, STAGE_2_X, STAGE_2_Y);
+		break;
+	case DIK_7:
+		CGame::GetInstance()->SwitchScene(3, STAGE_3_X, STAGE_3_Y, -1);
+		break;
+	case DIK_8:
+		CGame::GetInstance()->SwitchScene(4, STAGE_4_X, STAGE_4_Y, -1);
 		break;
 	}
 }
@@ -261,74 +297,102 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 {
 	CGame *game = CGame::GetInstance();
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
-
+	int state = simon->GetState();
 	// disable control key when Simon die 
-	if (simon->GetState() == SIMON_STATE_DIE) return;
-	if (!game->IsKeyDown(DIK_DOWN))
+	if (state == SIMON_STATE_HURT) return;
+	if (state == SIMON_STATE_WALKING && simon->isWalkingtoStair) return; //disable 
+	if (simon->isAttack) return;
+	if (state >= SIMON_STATE_STAIRIDLE && state <= SIMON_STATE_STAIRCLIMB)
 	{
-		if (simon->GetState() == SIMON_STATE_DUCKING)
+		if (game->IsKeyDown(DIK_DOWN))
 		{
-			simon->SetState(SIMON_STATE_IDLE);
-			simon->y -= 8;
+			simon->stair_ny = 1;
+			simon->SetState(SIMON_STATE_STAIRCLIMB);
 		}
-		if (simon->GetState()==SIMON_STATE_DUCKATK) 
+		else if (game->IsKeyDown(DIK_UP))
 		{
-			if (GetTickCount() - simon->attack_start > SIMON_ATTACK_TIME  && simon->attack_start > 0) //wait for Simon to finish attack animation
-			{
-				simon->isDuck = 0;
-				simon->y -= 8;
-			}
+			simon->stair_ny = -1;
+			simon->SetState(SIMON_STATE_STAIRCLIMB);
+		}
+		else
+		{
+			simon->SetState(SIMON_STATE_STAIRIDLE);
 		}
 	}
 	else
 	{
-		if (simon->isAttack)
+		if (!game->IsKeyDown(DIK_DOWN))
 		{
-			if (simon->attack_start <= 0)
+			if (state == SIMON_STATE_DUCKING)
 			{
-				simon->SetState(SIMON_STATE_DUCKING);
-			}
-		}
-		else
-		{
-			if (!simon->isJump && !simon->isDuck)
-			{
-				simon->SetState(SIMON_STATE_DUCKING);
-			}
-		}
-	}
-	if (!simon->isAttack) //disable keys when attacking
-	{
-		if (game->IsKeyDown(DIK_RIGHT))
-		{
-			if (!simon->isJump)
-			{
-				simon->nx = 1;
-				if (!simon->isDuck)
-					simon->vx = SIMON_WALKING_SPEED * simon->nx;
-			}
-		}
-		else if (game->IsKeyDown(DIK_LEFT))
-		{
-			if (!simon->isJump)
-			{
-				simon->nx = -1;
-				if (!simon->isDuck)
-					simon->vx = SIMON_WALKING_SPEED * simon->nx;
-			}
-		}
-		else
-		{
-			if (!simon->isDuck && !simon->isAttack)
 				simon->SetState(SIMON_STATE_IDLE);
+				simon->y -= 8;
+			}
+			else if (state == SIMON_STATE_DUCKATK)
+			{
+				if (GetTickCount() - simon->attack_start > SIMON_ATTACK_TIME  && simon->attack_start > 0) //wait for Simon to finish attack animation
+				{
+					simon->isDuck = 0;
+					simon->y -= 8;
+				}
+			}
 		}
-	}
-	if (game->IsKeyDown(DIK_Z))
-	{
-		if (!simon->isAttack)
+		else
 		{
-			simon->StartAttackSequence(!game->IsKeyDown(DIK_UP)); //if the UP key is pressed, try to fire extra weapon
+			if (simon->isOnStairTop)
+			{
+				if (!simon->isWalkingtoStair && !simon->isJump)
+				{
+					simon->stair_ny = 1;
+					simon->Walk(0);
+				}
+			}
+			else if (!simon->isAttack)
+			{
+				if (!simon->isJump && !simon->isDuck)
+					simon->SetState(SIMON_STATE_DUCKING);
+			}
+		}
+		if (game->IsKeyDown(DIK_UP))
+		{
+			if (simon->isOnStairBottom && !simon->isJump)
+			{
+				if (!simon->isWalkingtoStair)
+				{
+					simon->stair_ny = -1;
+					simon->Walk(1);
+				}
+			}
+		}
+		if (!simon->isAttack) //disable keys when attacking
+		{
+			if (game->IsKeyDown(DIK_RIGHT))
+			{
+				if (!simon->isJump)
+				{
+					simon->nx = 1;
+					if (!simon->isDuck)
+						simon->SetState(SIMON_STATE_WALKING);
+					//simon->vx = SIMON_WALKING_SPEED * simon->nx;
+				}
+			}
+			else if (game->IsKeyDown(DIK_LEFT))
+			{
+				if (!simon->isJump)
+				{
+					simon->nx = -1;
+					if (!simon->isDuck)
+						simon->SetState(SIMON_STATE_WALKING);
+					//simon->vx = SIMON_WALKING_SPEED * simon->nx;
+				}
+			}
+			else
+			{
+				if (!simon->isDuck && !simon->isAttack && !simon->isWalkingtoStair)
+					simon->SetState(SIMON_STATE_IDLE);
+			}
 		}
 	}
+		
 }
 
