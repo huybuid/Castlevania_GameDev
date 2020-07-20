@@ -139,6 +139,7 @@
     <ClCompile Include="FirePillar.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HolyWater.cpp" />
+    <ClCompile Include="Hunchback.cpp" />
     <ClCompile Include="IAxe.cpp" />
     <ClCompile Include="ICross.cpp" />
     <ClCompile Include="IDagger.cpp" />
@@ -184,6 +185,7 @@
     <ClInclude Include="FirePillar.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HolyWater.h" />
+    <ClInclude Include="Hunchback.h" />
     <ClInclude Include="IAxe.h" />
     <ClInclude Include="ICross.h" />
     <ClInclude Include="IDagger.h" />

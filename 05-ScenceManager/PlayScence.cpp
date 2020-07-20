@@ -245,7 +245,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if ((simon->GetState()==SIMON_STATE_IDLE ||simon->GetState()==SIMON_STATE_WALKING) && !simon->isJump)
+		if ((simon->GetState()==SIMON_STATE_IDLE ||simon->GetState()==SIMON_STATE_WALKING) && !simon->isJump && !simon->isFall)
 		{
 			simon->SetState(SIMON_STATE_JUMP);
 		}
@@ -283,6 +283,9 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_9:
 		CGame::GetInstance()->SwitchScene(5, STAGE_5_X, STAGE_5_Y);
+		break;
+	case DIK_0:
+		CGame::GetInstance()->SwitchScene(6, STAGE_6_X, STAGE_6_Y);
 	}
 }
 

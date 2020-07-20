@@ -38,5 +38,5 @@
 #define STAGE_5_X 32
 #define STAGE_5_Y 129
 
-#define STAGE_6_X
-#define STAGE_6_Y
+#define STAGE_6_X 40
+#define STAGE_6_Y 48

@@ -154,6 +154,9 @@
     <ClCompile Include="BackGround.cpp">
       <Filter>GameEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Hunchback.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigHeart.h">
@@ -284,6 +287,9 @@
     </ClInclude>
     <ClInclude Include="BackGround.h">
       <Filter>GameEngine</Filter>
+    </ClInclude>
+    <ClInclude Include="Hunchback.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

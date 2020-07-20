@@ -9,6 +9,17 @@
 #define GRID_CELL_HEIGHT SCREEN_HEIGHT;
 #define GRID_CELL_WIDTH SCREEN_WIDTH;
 
+#define GRID_SIMON 0
+#define GRID_BRICK 1
+#define GRID_FIREPILLAR 2
+#define GRID_STAIRTOP 3
+#define GRID_STAIR_BOTTOM 4
+#define GRID_PLATFORM 7
+
+#define GRID_KNIGHT 5
+#define GRID_BAT 6
+#define GRID_PORTAL 50
+
 using namespace std;
 class CGrid
 {

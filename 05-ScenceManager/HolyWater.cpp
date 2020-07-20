@@ -78,7 +78,7 @@ void HolyWater::Render()
 void HolyWater::GetBoundingBox(float & left, float & top, float & right, float & bottom)
 {
 	left = x;
-	top = y;
+	top = (GetState() == HOLYWATER_STATE_BOTTLE) ? y + 8 : y;
 	bottom = y + HOLYWATER_BBOX_Y;
 	right = (GetState() == HOLYWATER_STATE_BOTTLE) ? x + 8 : x + 16;
 }

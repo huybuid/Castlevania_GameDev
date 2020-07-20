@@ -195,7 +195,7 @@ LPCOLLISIONEVENT CGameObject::AABB(LPGAMEOBJECT obj)
 		if (tl < l)
 			nx = -1;
 		else
-			nx = -1;
+			nx = 1;
 		if (tb < b)
 			ny = -1;
 		else

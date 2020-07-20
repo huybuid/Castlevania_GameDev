@@ -13,6 +13,7 @@
 #include "HolyWater.h"
 #include "StairTop.h"
 #include "StairBottom.h"
+#include "Platform.h"
 
 CSimon::CSimon(float x, float y, int nx, int state, int lvl, int h, int current_hp, int wp, int wp_lvl) : CSimon()
 {
@@ -144,10 +145,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		y += dy;
 		isOnStairBottom = false;
 		isOnStairTop = false;
+		if (!isJump) isFall = true;
 	}
 	else
 	{
 
+	
 		float min_tx, min_ty, nx = 0, ny;
 		float rdx = 0;
 		float rdy = 0;
@@ -160,8 +163,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		//	x += nx*abs(rdx); 
 
 		// block every object first!
-		x += min_tx * dx + nx * 0.3f;
-		if (ny < 0)
+		x += min_tx * dx + nx * 0.3f;	if (ny < 0)
 			y += min_ty * dy + ny * 0.3f;
 		else
 			y += dy + ny * 0.3f;
@@ -177,7 +179,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				jump_start = 0;
 				animation_set->at(SIMON_ANI_JUMP)->SetCurrentFrame();
 			}
-			vy = 0;
+			vy = SIMON_GRAVITY * dt;
 		}
 		//
 		// Collision logic with other objects
@@ -186,7 +188,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
 			//if collides with a portal
-
+			if (dynamic_cast<Platform *>(e->obj))
+			{
+				x += e->obj->dx;
+			}
 		}
 	}
 	if (inEvents.size()>0)

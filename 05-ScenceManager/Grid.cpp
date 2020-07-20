@@ -6,6 +6,7 @@
 #include "StairTop.h"
 #include "Bat.h"
 #include "Knight.h"
+#include "Platform.h"
 
 CGrid* CGrid::__instance = NULL;
 
@@ -36,19 +37,21 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 {
 	switch (object)
 	{
-	case 1:
+	case GRID_BRICK:
 		return new CBrick(x, y, w, h);
-	case 2:
+	case GRID_PLATFORM:
+		return new Platform(x, y, n, w, h);
+	case GRID_FIREPILLAR:
 		return new FirePillar(x, y, type, id_item);
-	case 3:
+	case GRID_STAIRTOP:
 		return new StairTop(x,y,n);
-	case 4:
+	case GRID_STAIR_BOTTOM:
 		return new StairBottom(x, y, n);
-	case 5:
+	case GRID_KNIGHT:
 		return new Knight(x,y,n,w,h);
-	case 6:
+	case GRID_BAT:
 		return new Bat(x, y, n);
-	case 50:
+	case GRID_PORTAL:
 		return new CPortal(x, y, w, h, type);
 	/*case PORTAL: return new CGate(x, y);
 	case PANTHER: return new CPanther(x, y, id_item);
