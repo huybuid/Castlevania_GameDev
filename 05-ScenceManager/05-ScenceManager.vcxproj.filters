@@ -291,5 +291,11 @@
     <ClInclude Include="Hunchback.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="ItemList.h">
+      <Filter>Items</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponList.h">
+      <Filter>Weapons</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

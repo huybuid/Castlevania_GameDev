@@ -3,6 +3,12 @@
 void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	if (!isActive) return;
+	DWORD tick = GetTickCount();
+	if (tick - spawn_start > ITEM_SPAWN_TIME)
+	{
+		spawn_start = 0;
+		isActive = false;
+	}
 	CGameObject::Update(dt);
 	vy += ITEM_GRAVITY * dt;
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -32,7 +38,7 @@ void CItem::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 void CItem::Render()
 {
-	if (!isActive) return;  //TEMPORARY
+	if (!isActive) return;  
 	int alpha = 255;
 	animation_set->at(0)->Render(x, y, nx, alpha);
 	//RenderBoundingBox();

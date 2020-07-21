@@ -6,14 +6,11 @@
 #include "GameObject.h"
 #include "Item.h"
 #include "PlayScence.h"
-#include "define.h"
-#include "Dagger.h"
-#include "Axe.h"
-#include "Cross.h"
-#include "HolyWater.h"
 #include "StairTop.h"
 #include "StairBottom.h"
 #include "Platform.h"
+#include "WeaponList.h"
+#include "Utils.h"
 
 CSimon::CSimon(float x, float y, int nx, int state, int lvl, int h, int current_hp, int wp, int wp_lvl) : CSimon()
 {
@@ -53,7 +50,12 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	if (tick - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
 		untouchable_start = 0;
-		untouchable = 0;
+		isHurt = 0;
+	}
+	if (tick - hurt_start > SIMON_HURT_TIME && hurt_start > 0)
+	{
+		hurt_start = 0;
+		isFall = true;
 	}
 	// reset attack if attack time has passed
 	if (tick - attack_start > SIMON_ATTACK_TIME && attack_start > 0)
@@ -76,7 +78,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				break;
 			default:
 				break;
-		}
+			}
 		}
 		isAttack = 0;
 		attack_start = 0;
@@ -131,21 +133,23 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	coEvents.clear();
 	if (state != SIMON_STATE_STAIRATK && state != SIMON_STATE_STAIRIDLE && state != SIMON_STATE_STAIRCLIMB)
 	{
-		if (isJump && !isFall)
+		if ((isJump || isHurt) && !isFall)
 			vy += SIMON_JUMP_GRAVITY * dt;
 		else vy += SIMON_GRAVITY * dt;
 		CalcPotentialCollisions(coObjects, coEvents);
 	}
 
 
-	// No collision occured => Simon is falling
+	// Brick collision process
 	if (coEvents.size() == 0)
 	{
 		x += dx;
 		y += dy;
 		isOnStairBottom = false;
 		isOnStairTop = false;
-		if (!isJump) isFall = true;
+
+		if (!isJump && (tick - hurt_start > SIMON_HURT_TIME && hurt_start > 0)) 
+			isFall = true;
 	}
 	else
 	{
@@ -179,21 +183,40 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				jump_start = 0;
 				animation_set->at(SIMON_ANI_JUMP)->SetCurrentFrame();
 			}
+			if (animation_set->at(SIMON_ANI_HURT)->GetCurrentFrame() == 0)
+			{
+				SetState(SIMON_STATE_IDLE);
+				animation_set->at(SIMON_ANI_HURT)->SetCurrentFrame();
+			}
 			vy = SIMON_GRAVITY * dt;
 		}
-		//
-		// Collision logic with other objects
-		//
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coEventsResult[i];
-			//if collides with a portal
+			//if collides with a moving platform
 			if (dynamic_cast<Platform *>(e->obj))
 			{
 				x += e->obj->dx;
 			}
 		}
 	}
+
+	// Enemy collision process
+	if (!isHurt)
+	{
+		vector<LPCOLLISIONEVENT> enEvents; //Enemy events
+		enEvents.clear();
+		CollisionsWithEnemies(coObjects, enEvents);
+		if (enEvents.size() > 0)
+		{
+			if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
+				nx = -enEvents[0]->nx;
+			SetState(SIMON_STATE_HURT);
+			hp -= 2;
+		}
+	}
+
+	//Items collision process
 	if (inEvents.size()>0)
 	for (UINT i = 0; i < inEvents.size(); i++)
 	{
@@ -283,11 +306,16 @@ void CSimon::ResetAttackState()
 void CSimon::Render() {
 	int ani;
 	int alpha = 255;
-	if (untouchable) alpha = 128;
+	if (isHurt) alpha = 128;
+
 	if (state == SIMON_STATE_DIE) {
 		ani = SIMON_ANI_DIE;
 	}
-	else {
+	else if (state == SIMON_STATE_HURT) {
+		ani = SIMON_ANI_HURT;
+	}
+	else 
+	{
 		if (state >= SIMON_STATE_STAIRIDLE && state <= SIMON_STATE_STAIRCLIMB)
 		{
 			if (vx == 0)
@@ -416,6 +444,16 @@ void CSimon::SetState(int state)
 		vy = 0;
 		dy = 0;
 		dx = 0;
+		break;
+	case SIMON_STATE_HURT:
+		StartUntouchable();
+		if (prevstate < SIMON_STATE_STAIRIDLE || prevstate > SIMON_STATE_STAIRCLIMB)
+		{
+			vx = -nx * SIMON_STAIR_SPEED;
+			vy = -SIMON_HURT_SPEED;
+			hurt_start = untouchable_start;
+		}
+		break;
 	}
 }
 

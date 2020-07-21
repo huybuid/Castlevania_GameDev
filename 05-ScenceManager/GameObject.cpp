@@ -109,6 +109,32 @@ void CGameObject::CalcPotentialInteractions(
 	std::sort(inEvents.begin(), inEvents.end(), CCollisionEvent::compare);
 }
 
+void CGameObject::CollisionsWithEnemies(
+	vector<LPGAMEOBJECT> *coObjects,
+	vector<LPCOLLISIONEVENT> &inEvents)
+{
+	for (UINT i = 0; i < coObjects->size(); i++)
+	{
+		if (!coObjects->at(i)->isActive || !coObjects->at(i)->isEnemy) continue; //if object is not active or can't be colided, continue
+		LPCOLLISIONEVENT e;
+		bool b = isAABB(coObjects->at(i));
+		if (b)
+		{
+			e = AABB(coObjects->at(i));
+		}
+		else
+		{
+			e = SweptAABBEx(coObjects->at(i));
+		}
+		if (e->t > 0 && e->t <= 1.0f)
+			inEvents.push_back(e);
+		else
+			delete e;
+	}
+
+	std::sort(inEvents.begin(), inEvents.end(), CCollisionEvent::compare);
+}
+
 /*void CGameObject::FilterCollision(
 	vector<LPCOLLISIONEVENT> &coEvents,
 	vector<LPCOLLISIONEVENT> &coEventsResult,

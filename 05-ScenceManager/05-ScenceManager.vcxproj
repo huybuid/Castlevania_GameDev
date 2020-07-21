@@ -192,6 +192,7 @@
     <ClInclude Include="IHolyWater.h" />
     <ClInclude Include="InvincibleBottle.h" />
     <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemList.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="MoneyPouch.h" />
     <ClInclude Include="Rosary.h" />
@@ -212,6 +213,7 @@
     <ClInclude Include="Sprites.h" />
     <ClInclude Include="Textures.h" />
     <ClInclude Include="Weapon.h" />
+    <ClInclude Include="WeaponList.h" />
     <ClInclude Include="WeaponUpgrade.h" />
     <ClInclude Include="Whip.h" />
     <ClInclude Include="WhipUpgrade.h" />

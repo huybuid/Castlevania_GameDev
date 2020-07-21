@@ -242,10 +242,11 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
+	if (simon->state == SIMON_STATE_HURT) return;
 	switch (KeyCode)
 	{
 	case DIK_X:
-		if ((simon->GetState()==SIMON_STATE_IDLE ||simon->GetState()==SIMON_STATE_WALKING) && !simon->isJump && !simon->isFall)
+		if (!simon->isAttack && !simon->isJump && !simon->isFall && !simon->isWalkingtoStair)
 		{
 			simon->SetState(SIMON_STATE_JUMP);
 		}

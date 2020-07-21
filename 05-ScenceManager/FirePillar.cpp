@@ -1,20 +1,7 @@
 #include "FirePillar.h"
 #include "PlayScence.h"
 #include "Game.h"
-#include "BigHeart.h"
-#include "Chicken.h"
-#include "IAxe.h"
-#include "ICross.h"
-#include "IDagger.h"
-#include "IHolyWater.h"
-#include "InvincibleBottle.h"
-#include "MoneyPouch.h"
-#include "Orb.h"
-#include "Rosary.h"
-#include "StopWatch.h"
-#include "SmallHeart.h"
-#include "WeaponUpgrade.h"
-#include "WhipUpgrade.h"
+#include "ItemList.h"
 
 void FirePillar::Render()
 {
@@ -44,7 +31,8 @@ void FirePillar::Destroy()
 	if (item_id != 0)
 	{
 		CItem *item = SpawnItem(item_id);
-		((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items.push_back(item);
+		if (item !=NULL)
+			((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items.push_back(item);
 	}
 	isActive = false;
 }
@@ -53,33 +41,37 @@ CItem *FirePillar::SpawnItem(int i)
 {
 	switch (i)
 	{
-	case 1:
+	case ITEM_INDICATOR_SMALLHEART:
 		return new SmallHeart(this->x, this->y);
-	case 2:
+	case ITEM_INDICATOR_BIGHEART:
 		return new BigHeart(this->x, this->y);
-	case 3:
+	case ITEM_INDICATOR_WHIPUPGRADE:
 		return new WhipUpgrade(this->x, this->y);
-	case 4:
+	case ITEM_INDICATOR_AXE:
 		return new IAxe(this->x, this->y);
-	case 5:
+	case ITEM_INDICATOR_CROSS:
 		return new ICross(this->x, this->y);
-	case 6:
+	case ITEM_INDICATOR_DAGGER:
 		return new IDagger(this->x, this->y);
-	case 7:
+	case ITEM_INDICATOR_HOLYWATER:
 		return new IHolyWater(this->x, this->y);
-	case 8:
+	case ITEM_INDICATOR_STOPWATCH:
 		return new StopWatch(this->x, this->y);
-	case 9:
-		return new MoneyPouch(this->x, this->y);
-	case 10:
+	case ITEM_INDICATOR_MONEYPOUCH100:
+		return new MoneyPouch(this->x, this->y, 0);
+	case ITEM_INDICATOR_MONEYPOUCH400:
+		return new MoneyPouch(this->x, this->y, 1);
+	case ITEM_INDICATOR_MONEYPOUCH700:
+		return new MoneyPouch(this->x, this->y, 2);
+	case ITEM_INDICATOR_ROSARY:
 		return new Rosary(this->x, this->y);
-	case 11:
+	case ITEM_INDICATOR_WPNUPGRADE:
 		return new WeaponUpgrade(this->x, this->y);
-	case 12:
+	case ITEM_INDICATOR_INVISPOTION:
 		return new InvincibleBottle(this->x, this->y);
-	case 13:
+	case ITEM_INDICATOR_ORB:
 		return new Orb(this->x, this->y);
-	case 14:
+	case ITEM_INDICATOR_CHICKEN:
 		return new Chicken(this->x, this->y);
 	default:
 		return NULL;

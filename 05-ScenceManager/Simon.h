@@ -6,7 +6,7 @@
 #define SIMON_WALKING_SPEED		0.07f 
 #define SIMON_STAIR_SPEED		0.05f
 #define SIMON_JUMP_SPEED_Y		0.21f
-#define SIMON_JUMP_DEFLECT_SPEED 0.1f
+#define SIMON_HURT_SPEED		0.15f
 #define SIMON_JUMP_GRAVITY		0.0007f
 #define SIMON_GRAVITY			0.002f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
@@ -55,6 +55,7 @@
 #define SIMON_UNTOUCHABLE_TIME	5000
 #define SIMON_ATTACK_TIME		350
 #define SIMON_JUMP_TIME			400
+#define SIMON_HURT_TIME			300
 
 #define TARGET_X_NaN	-9999 //because Simon will never reach this x cordinate, this can be an indicator for NaN value 
 
@@ -65,13 +66,13 @@ public:
 	int level; //indicates whip level
 	int weapon_indicator, weapon_level; //indicates which weapon Simon is currently using
 	int heart; // "bullets" for weapons
-	bool untouchable = false;
 	int hp;
 	bool isJump, isFall;
 	bool isAttack, isWeaponAttack=false;
 	bool isDuck;
+	bool isHurt;
 	bool isOnStairTop, isOnStairBottom, isWalkingtoStair = false;
-	DWORD untouchable_start, attack_start, jump_start;
+	DWORD untouchable_start, attack_start, jump_start, hurt_start;
 
 	Whip *whip;
 	CWeapon *weapon;
@@ -92,7 +93,11 @@ public:
 	void SetState(int state);
 	void ResetAttackState();
 	void SetLevel(int l) { level = l; }
-	void StartUntouchable() { untouchable = 1; untouchable_start = GetTickCount(); }
+
+	void StartUntouchable() { 
+		isHurt = 1; 
+		untouchable_start = GetTickCount();
+	}
 	void StartAttackSequence(bool isWhipAtk);
 
 	void Reset(float reset_x, float reset_y, int nx = 0, int state = 0);

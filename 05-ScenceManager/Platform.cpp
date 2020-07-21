@@ -40,7 +40,7 @@ void Platform::GetBoundingBox(float & left, float & top, float & right, float & 
 	left = x;
 	top = y;
 	right = x + PLATFORM_BBOX_WIDTH;
-	bottom = y + PLATFORM_BBOX_HEIGHT;
+	bottom = y;
 }
 
 Platform::~Platform()

@@ -6,6 +6,7 @@ void Knight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
 	x += dx;
+	y += dy;
 	if (x <= limit_l || x >= limit_r)
 	{
 		if (x <= limit_l) x = limit_l;
@@ -26,7 +27,7 @@ void Knight::GetBoundingBox(float & left, float & top, float & right, float & bo
 	left = x;
 	top = y;
 	right = x + KNIGHT_BBOX_WIDTH;
-	bottom = x + KNIGHT_BBOX_HEIGHT;
+	bottom = y + KNIGHT_BBOX_HEIGHT;
 }
 
 Knight::~Knight()

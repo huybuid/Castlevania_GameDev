@@ -1,14 +1,3 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (05-ScenceManager.vcxproj).  This can lead to incorrect clean and rebuild behavior.
-  Simon.cpp
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\platform.h(20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(109): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(119): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(220): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(240): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(405): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(409): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(504): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
-d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(505): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  FirePillar.cpp
   05-ScenceManager.vcxproj -> D:\Study\gamedev-intro-tutorials-master\Debug\Castlevania.exe

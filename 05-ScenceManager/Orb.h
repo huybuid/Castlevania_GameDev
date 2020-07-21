@@ -2,6 +2,7 @@
 #include "Item.h"
 #include "PlayScence.h"
 #include "Game.h"
+#include "Simon.h"
 
 #define ORB_ANIMATION_SET	14
 
@@ -15,6 +16,7 @@ public:
 		SetAnimationSet(ani_set);
 	};
 	~Orb() {};
-	void Destroy() override { CItem::Destroy(); };
+	void Destroy() override { CItem::Destroy(); ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer()->hp = SIMON_MAX_HP;
+	};
 };
 
