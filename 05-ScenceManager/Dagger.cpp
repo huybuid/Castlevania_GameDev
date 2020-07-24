@@ -18,10 +18,11 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		for (UINT i = 0; i < coResults.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coResults[i];
-			if (dynamic_cast<CEnemy *>(e->obj)) //if object is FirePillar
+			if (dynamic_cast<CEnemy *>(e->obj))
 			{
 				CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
 				target->Damage(dmg);
+				isActive = false;
 			}
 		}
 	}
@@ -38,5 +39,5 @@ void Dagger::GetBoundingBox(float & left, float & top, float & right, float & bo
 	left = x;
 	top = y;
 	right = x + DAGGER_BBOX_WIDTH;
-	left = y + DAGGER_BBOX_HEIGHT;
+	bottom = y + DAGGER_BBOX_HEIGHT;
 }

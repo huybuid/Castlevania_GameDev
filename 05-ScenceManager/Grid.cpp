@@ -1,12 +1,10 @@
 #include "Grid.h"
 #include "Brick.h"
-#include "FirePillar.h"
 #include "Portal.h"
 #include "StairBottom.h"
 #include "StairTop.h"
-#include "Bat.h"
-#include "Knight.h"
 #include "Platform.h"
+#include "EnemyList.h"
 
 CGrid* CGrid::__instance = NULL;
 
@@ -51,8 +49,14 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 		return new Knight(x,y,n,w,h);
 	case GRID_BAT:
 		return new Bat(x, y, n);
+	case GRID_ZOMBIE:
+		return new Zombie(x, y, n);
 	case GRID_PORTAL:
 		return new CPortal(x, y, w, h, type);
+	case GRID_GHOST:
+		return new Ghost(x, y);
+	case GRID_HUNCHBACK:
+		return new Hunchback();
 	/*case PORTAL: return new CGate(x, y);
 	case PANTHER: return new CPanther(x, y, id_item);
 	case FISHMEN: return new CFishman(x, y, id_item);

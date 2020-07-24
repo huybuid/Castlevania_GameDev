@@ -7,7 +7,7 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	if (state == BAT_STATE_IDLE)
 	{
 		CGameObject *simon = ((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->GetPlayer();
-		if ((simon->y <= this->y + BAT_TRIGGER_Y) && (simon->x <= this->x + BAT_TRIGGER_X))
+		if ((simon->y <= this->y + BAT_TRIGGER_Y) && (simon->x <= this->x + BAT_TRIGGER_X && simon->x >= this->x))
 		{
 			SetState(BAT_STATE_FLY);
 		}
@@ -48,7 +48,7 @@ void Bat::GetBoundingBox(float & left, float & top, float & right, float & botto
 	left = x;
 	top = y;
 	right = x + BAT_BBOX_WIDTH;
-	bottom = x + BAT_BBOX_HEIGHT;
+	bottom = y + BAT_BBOX_HEIGHT;
 }
 
 

@@ -1,7 +1,7 @@
 #pragma once
 #include "Brick.h"
 
-#define ANIMATION_SET_PLATFORM 30
+#define ANIMATION_SET_PLATFORM 40
 #define PLATFORM_SPEED_X	0.03f
 #define STOP_TIME	300
 

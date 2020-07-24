@@ -44,6 +44,12 @@ CSimon::CSimon(CSimon * s):CSimon()
 void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 {
 	// Calculate dx, dy 
+	if (state != SIMON_STATE_STAIRATK && state != SIMON_STATE_STAIRIDLE && state != SIMON_STATE_STAIRCLIMB)
+	{
+		if ((isJump || isHurt) && !isFall)
+			vy += SIMON_JUMP_GRAVITY * dt;
+		else vy += SIMON_GRAVITY * dt;
+	}
 	CGameObject::Update(dt);
 	DWORD tick = GetTickCount();
 	// reset untouchable timer if untouchable time has passed
@@ -133,9 +139,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	coEvents.clear();
 	if (state != SIMON_STATE_STAIRATK && state != SIMON_STATE_STAIRIDLE && state != SIMON_STATE_STAIRCLIMB)
 	{
-		if ((isJump || isHurt) && !isFall)
-			vy += SIMON_JUMP_GRAVITY * dt;
-		else vy += SIMON_GRAVITY * dt;
 		CalcPotentialCollisions(coObjects, coEvents);
 	}
 
@@ -188,7 +191,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 				SetState(SIMON_STATE_IDLE);
 				animation_set->at(SIMON_ANI_HURT)->SetCurrentFrame();
 			}
-			vy = SIMON_GRAVITY * dt;
+			vy = 0;
 		}
 		for (UINT i = 0; i < coEventsResult.size(); i++)
 		{
@@ -211,6 +214,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
 				nx = -enEvents[0]->nx;
+			ResetAttackState();
 			SetState(SIMON_STATE_HURT);
 			hp -= 2;
 		}

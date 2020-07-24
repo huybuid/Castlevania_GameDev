@@ -55,7 +55,7 @@ void Whip::Render() {
 	if (!isAttack) return;
 	int alpha = 255;
 	animation_set->at(level)->Render(x, y, nx, alpha);
-	RenderBoundingBox();
+	//RenderBoundingBox();
 }
 
 void Whip::SetState(int state) {

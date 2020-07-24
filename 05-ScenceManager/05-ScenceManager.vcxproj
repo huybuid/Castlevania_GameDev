@@ -137,6 +137,7 @@
     <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Dagger.cpp" />
     <ClCompile Include="FirePillar.cpp" />
+    <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="Hunchback.cpp" />
@@ -169,6 +170,7 @@
     <ClCompile Include="WeaponUpgrade.cpp" />
     <ClCompile Include="Whip.cpp" />
     <ClCompile Include="WhipUpgrade.cpp" />
+    <ClCompile Include="Zombie.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Animations.h" />
@@ -182,7 +184,9 @@
     <ClInclude Include="Chicken.h" />
     <ClInclude Include="Cross.h" />
     <ClInclude Include="Dagger.h" />
+    <ClInclude Include="EnemyList.h" />
     <ClInclude Include="FirePillar.h" />
+    <ClInclude Include="Ghost.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="Hunchback.h" />
@@ -217,6 +221,7 @@
     <ClInclude Include="WeaponUpgrade.h" />
     <ClInclude Include="Whip.h" />
     <ClInclude Include="WhipUpgrade.h" />
+    <ClInclude Include="Zombie.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -6,7 +6,23 @@
 void FirePillar::Render()
 {
 	if (!isActive) return;
-	animation_set->at(type)->Render(x, y);
+	if (type < TYPE_HIDDENBRICK)
+		animation_set->at(type)->Render(x, y);
+	else
+	{
+		switch (CGame::GetInstance()->GetCurrentSceneNo())
+		{
+		case 2:case 3:
+			animation_set->at(2)->Render(x, y);
+			break;
+		case 4:case 5:
+			animation_set->at(3)->Render(x, y);
+			break;
+		case 6:
+			animation_set->at(4)->Render(x, y);
+			break;
+		}
+	}
 	//RenderBoundingBox();
 }
 
@@ -19,10 +35,15 @@ void FirePillar::GetBoundingBox(float &l, float &t, float &r, float &b)
 		r = x + FIREPILLAR_BBOX_WIDTH;
 		b = y + FIREPILLAR_BBOX_HEIGHT;
 	}
-	else
+	else if (type == TYPE_CANDLE)
 	{
 		r = x + CANDLE_BBOX_WIDTH;
 		b = y + CANDLE_BBOX_HEIGHT;
+	}
+	else
+	{
+		r = x + HIDDENBRICK_WIDTH;
+		b = y + HIDDENBRICK_HEIGHT;
 	}
 }
 

@@ -157,6 +157,12 @@
     <ClCompile Include="Hunchback.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Zombie.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Ghost.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigHeart.h">
@@ -296,6 +302,15 @@
     </ClInclude>
     <ClInclude Include="WeaponList.h">
       <Filter>Weapons</Filter>
+    </ClInclude>
+    <ClInclude Include="Zombie.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyList.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Ghost.h">
+      <Filter>Enemy</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

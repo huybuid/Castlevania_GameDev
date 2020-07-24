@@ -24,7 +24,7 @@ class FirePillar :
 	int type, item_id;
 public:
 	FirePillar():CEnemy() { hp = 1; isEnemy = false; this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_FIREPILLAR); };
-	FirePillar(float x, float y, int t, int id) :FirePillar() { type = t; item_id = id; this->x = x; this->y = y; if (t == 2) isCollidable = true; };
+	FirePillar(float x, float y, int t, int id) :FirePillar() { type = t; item_id = id; this->x = x; this->y = y; if (t == TYPE_HIDDENBRICK) isCollidable = true; };
 	virtual void Render();
 	virtual void GetBoundingBox(float &l, float &t, float &r, float &b);
 	void Destroy();

@@ -194,11 +194,13 @@ void CPlayScene::Update(DWORD dt)
 
 	// Update camera to follow mario
 	float cx, cy;
+	CGame::GetInstance()->GetCamPos(cx, cy);
+	if (CGame::GetInstance()->GetCurrentSceneNo() == 6 && cx == background.screen_limit - SCREEN_WIDTH) return;
 	player->GetPosition(cx, cy);
 	cx -= game->GetScreenWidth() / 2 - 16;
 	if (cx < 0) { cx = 0; }
 	if (cx > background.screen_limit - SCREEN_WIDTH) { cx = background.screen_limit - SCREEN_WIDTH; }
-	cy -= game->GetScreenHeight() / 2;
+
 
 	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 }
@@ -217,8 +219,7 @@ void CPlayScene::Render()
 	}
 	for (int i = 0; i < objects.size(); i++)
 	{
-		if (objects[i]->isActive)
-			objects[i]->Render();
+		objects[i]->Render();
 	}
 	for (size_t i = 0; i < items.size(); i++)
 	{

@@ -5,7 +5,7 @@
 
 #define SIMON_WALKING_SPEED		0.07f 
 #define SIMON_STAIR_SPEED		0.05f
-#define SIMON_JUMP_SPEED_Y		0.21f
+#define SIMON_JUMP_SPEED_Y		0.23f
 #define SIMON_HURT_SPEED		0.15f
 #define SIMON_JUMP_GRAVITY		0.0007f
 #define SIMON_GRAVITY			0.002f
@@ -52,10 +52,10 @@
 #define SIMON_DUCKING_BBOX_WIDTH	16
 #define SIMON_DUCKING_BBOX_HEIGHT	22
 
-#define SIMON_UNTOUCHABLE_TIME	5000
+#define SIMON_UNTOUCHABLE_TIME	3000
 #define SIMON_ATTACK_TIME		350
 #define SIMON_JUMP_TIME			400
-#define SIMON_HURT_TIME			300
+#define SIMON_HURT_TIME			400
 
 #define TARGET_X_NaN	-9999 //because Simon will never reach this x cordinate, this can be an indicator for NaN value 
 
