@@ -29,6 +29,7 @@ public:
 	vector<LPGAMEOBJECT> objects;
 	vector<LPGAMEOBJECT> items;
 	vector<LPGAMEOBJECT> weapons;
+	vector<LPGAMEOBJECT> enemies_projectiles;
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

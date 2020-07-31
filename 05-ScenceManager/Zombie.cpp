@@ -56,8 +56,8 @@ void Zombie::Render()
 {
 	if (!isActive) return;
 	if (damage_start == 0)
-		animation_set->at(state)->Render(x, y, nx);
-	else animation_set->at(state)->FreezeRender(x, y, nx);
+		animation_set->at(0)->Render(x, y, nx);
+	else animation_set->at(0)->FreezeRender(x, y, nx);
 }
 
 void Zombie::GetBoundingBox(float & left, float & top, float & right, float & bottom)

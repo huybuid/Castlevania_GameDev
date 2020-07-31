@@ -1,5 +1,7 @@
 #include "Dagger.h"
 #include "Enemy.h"
+#include "PlayScence.h"
+
 void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CWeapon::Update(dt, coObjects);
@@ -11,7 +13,9 @@ void Dagger::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vector<LPCOLLISIONEVENT> coResults;
 	coResults.clear();
+	vector<LPGAMEOBJECT> *enProjectiles = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->enemies_projectiles;
 	CalcPotentialObjectsOverlapsed(coObjects, coResults);
+	CalcPotentialObjectsOverlapsed(enProjectiles, coResults);
 	if (coResults.size() > 0) //
 	{
 		int dmg = GetDamage();

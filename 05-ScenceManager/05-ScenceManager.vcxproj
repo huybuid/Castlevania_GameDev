@@ -131,12 +131,13 @@
     <ClCompile Include="BackGround.cpp" />
     <ClCompile Include="Bat.cpp" />
     <ClCompile Include="BigHeart.cpp" />
+    <ClCompile Include="Bone.cpp" />
+    <ClCompile Include="Boss.cpp" />
     <ClCompile Include="Brick.cpp" />
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Dagger.cpp" />
-    <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="FirePillar.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -157,6 +158,7 @@
     <ClCompile Include="Platform.cpp" />
     <ClCompile Include="Portal.cpp" />
     <ClCompile Include="Simon.cpp" />
+    <ClCompile Include="Skeleton.cpp" />
     <ClCompile Include="SmallHeart.cpp" />
     <ClCompile Include="StairBottom.cpp" />
     <ClCompile Include="StairTop.cpp" />
@@ -181,6 +183,8 @@
     <ClInclude Include="BackGround.h" />
     <ClInclude Include="Bat.h" />
     <ClInclude Include="BigHeart.h" />
+    <ClInclude Include="Bone.h" />
+    <ClInclude Include="Boss.h" />
     <ClInclude Include="Brick.h" />
     <ClInclude Include="define.h" />
     <ClInclude Include="Enemy.h" />
@@ -188,7 +192,6 @@
     <ClInclude Include="Cross.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="EnemyList.h" />
-    <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="FirePillar.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Grid.h" />
@@ -205,12 +208,12 @@
     <ClInclude Include="Knight.h" />
     <ClInclude Include="MoneyPouch.h" />
     <ClInclude Include="Raven.h" />
-    <ClInclude Include="resource.h" />
     <ClInclude Include="Rosary.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Platform.h" />
     <ClInclude Include="Portal.h" />
     <ClInclude Include="Simon.h" />
+    <ClInclude Include="Skeleton.h" />
     <ClInclude Include="SmallHeart.h" />
     <ClInclude Include="StairBottom.h" />
     <ClInclude Include="StairTop.h" />

@@ -167,7 +167,15 @@
       <Filter>Enemy</Filter>
     </ClCompile>
     <ClCompile Include="HitFX.cpp" />
-    <ClCompile Include="EnemyProjectile.cpp" />
+    <ClCompile Include="Skeleton.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Bone.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigHeart.h">
@@ -321,7 +329,14 @@
       <Filter>Enemy</Filter>
     </ClInclude>
     <ClInclude Include="HitFX.h" />
-    <ClInclude Include="resource.h" />
-    <ClInclude Include="EnemyProjectile.h" />
+    <ClInclude Include="Skeleton.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Bone.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

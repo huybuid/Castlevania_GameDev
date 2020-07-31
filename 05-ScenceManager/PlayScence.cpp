@@ -196,6 +196,15 @@ void CPlayScene::Update(DWORD dt)
 			items.erase(items.begin() + j);
 		else j++;
 	}
+	for (size_t i = 0; i < enemies_projectiles.size(); i++)
+		enemies_projectiles[i]->Update(dt);
+	j = 0;
+	while (j < enemies_projectiles.size())
+	{
+		if (!enemies_projectiles[j]->isActive)
+			enemies_projectiles.erase(enemies_projectiles.begin() + j);
+		else j++;
+	}
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 
@@ -231,6 +240,10 @@ void CPlayScene::Render()
 	for (size_t i = 0; i < items.size(); i++)
 	{
 		items[i]->Render();
+	}
+	for (size_t i = 0; i < enemies_projectiles.size(); i++)
+	{
+		enemies_projectiles[i]->Render();
 	}
 }
 
@@ -305,6 +318,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_E:
 		DebugOut(L"[INFO] Heart: %d\n", simon->heart);
+		break;
 	}
 }
 

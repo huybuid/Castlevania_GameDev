@@ -516,6 +516,7 @@ void CGame::SwitchScene(int scene_id, float x, float y, int nx, int state)
 		dynamic_cast<CPlayScene *>(s)->GetPlayer()->nx = nx;
 		dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetState(state);
 	}
+	CGame::SetCamPos(0, 0);
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
 	s->Load();	
 }

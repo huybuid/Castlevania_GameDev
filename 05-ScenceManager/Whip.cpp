@@ -21,7 +21,9 @@ void Whip::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 	{
 		vector<LPCOLLISIONEVENT> coResults;
 		coResults.clear();
+		vector<LPGAMEOBJECT> *enProjectiles = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->enemies_projectiles;
 		CalcPotentialObjectsOverlapsed(coObjects, coResults);
+		CalcPotentialObjectsOverlapsed(enProjectiles, coResults);
 		if (coResults.size() > 0) //
 		{
 			int dmg = GetDamage();

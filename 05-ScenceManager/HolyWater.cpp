@@ -1,5 +1,6 @@
 #include "HolyWater.h"
 #include "Enemy.h"
+#include "PlayScence.h"
 void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CGameObject::Update(dt);
@@ -12,7 +13,9 @@ void HolyWater::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 		vy += HOLYWATER_GRAVITY * dt;
 
 		coEvents.clear();
+		vector<LPGAMEOBJECT> *enProjectiles = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->enemies_projectiles;
 		CalcPotentialCollisions(coObjects, coEvents);
+		CalcPotentialObjectsOverlapsed(enProjectiles, coEvents);
 		if (coEvents.size() == 0)
 		{
 			x += dx;

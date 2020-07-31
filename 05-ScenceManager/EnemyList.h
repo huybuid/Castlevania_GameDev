@@ -7,3 +7,5 @@
 #include "FirePillar.h"
 #include "Ghost.h"
 #include "Raven.h"
+#include "Skeleton.h"
+#include "Boss.h"

@@ -59,6 +59,8 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 		return new Hunchback(x, y, n);
 	case GRID_RAVEN:
 		return new Raven(x, y, n);
+	case GRID_SKELETON:
+		return new Skeleton(x, y, n);
 	/*case PORTAL: return new CGate(x, y);
 	case BAT: return new CBat(x, y, id_item);
 	case MONEY_5: return new CItemMoney(x, y, MONEY_5);*/

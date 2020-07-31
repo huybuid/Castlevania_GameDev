@@ -212,7 +212,9 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	{
 		vector<LPCOLLISIONEVENT> enEvents; //Enemy events
 		enEvents.clear();
+		vector<LPGAMEOBJECT> *enProjectiles = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->enemies_projectiles;
 		CollisionsWithEnemies(coObjects, enEvents);
+		CollisionsWithEnemies(enProjectiles, enEvents);
 		if (enEvents.size() > 0)
 		{
 			ResetAttackState();

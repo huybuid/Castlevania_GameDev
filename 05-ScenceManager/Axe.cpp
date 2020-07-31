@@ -1,5 +1,7 @@
 #include "Axe.h"
 #include "Enemy.h"
+#include "PlayScence.h"
+
 void Axe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	CWeapon::Update(dt, coObjects);
@@ -12,14 +14,16 @@ void Axe::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 	}
 	vector<LPCOLLISIONEVENT> coResults;
 	coResults.clear();
+	vector<LPGAMEOBJECT> *enProjectiles = &((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->enemies_projectiles;
 	CalcPotentialObjectsOverlapsed(coObjects, coResults);
+	CalcPotentialObjectsOverlapsed(enProjectiles, coResults);
 	if (coResults.size() > 0) //
 	{
 		int dmg = GetDamage();
 		for (UINT i = 0; i < coResults.size(); i++)
 		{
 			LPCOLLISIONEVENT e = coResults[i];
-			if (dynamic_cast<CEnemy *>(e->obj)) //if object is FirePillar
+			if (dynamic_cast<CEnemy *>(e->obj)) //if object is Enemy
 			{
 				CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
 				target->Damage(dmg);

@@ -22,6 +22,7 @@
 #define GRID_GHOST			9
 #define GRID_HUNCHBACK		10
 #define GRID_RAVEN			11
+#define GRID_SKELETON		12
 #define GRID_PORTAL			50
 
 using namespace std;

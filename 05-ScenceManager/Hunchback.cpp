@@ -70,7 +70,7 @@ void Hunchback::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			float rdy = 0;
 
 			FilterCollision(coEvents, coEventsResult, min_tx, min_ty, nx, ny, rdx, rdy);
-			x += min_tx * dx + nx * 0.1f;
+			x += min_tx * dx + nx * 0.4f;
 			y += min_ty * dy + ny * 0.4f;
 
 			next_nx = nx;
