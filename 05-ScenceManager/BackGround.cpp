@@ -24,7 +24,7 @@ void Background::Load(int texID)
 		for (int j = 0; j < columns; j++)
 		{
 			inp >> k;
-			ani = new CAnimation(100);
+			ani = new CAnimation();
 			ani->Add(BACKGROUND_ID + k);
 			tiles.push_back(ani);
 		}

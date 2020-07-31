@@ -4,6 +4,23 @@
 void Zombie::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	DWORD tick = GetTickCount();
+	if (freeze_start > 0)
+	{
+		if (isDamaged)
+		{
+			if (tick - damage_start > DAMAGE_FREEZE_TIME)
+			{
+				isDamaged = false;
+				damage_start = 0;
+			}
+		}
+		if (tick - freeze_start > freeze_time)
+		{
+			freeze_start = 0;
+			freeze_time = 0;
+		}
+		return;
+	}
 	vy += ZOMBIE_GRAVITY * dt;
 	CGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
@@ -38,7 +55,9 @@ void Zombie::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Zombie::Render()
 {
 	if (!isActive) return;
-	animation_set->at(1)->Render(x, y, nx);
+	if (damage_start == 0)
+		animation_set->at(state)->Render(x, y, nx);
+	else animation_set->at(state)->FreezeRender(x, y, nx);
 }
 
 void Zombie::GetBoundingBox(float & left, float & top, float & right, float & bottom)

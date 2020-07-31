@@ -19,7 +19,6 @@ void Whip::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 
 	if (tick - attack_start > 200 && tick - attack_start <= 300)
 	{
-		if (isHit) return; //Temporary solution: locks if already calculated collisions
 		vector<LPCOLLISIONEVENT> coResults;
 		coResults.clear();
 		CalcPotentialObjectsOverlapsed(coObjects, coResults);
@@ -36,17 +35,12 @@ void Whip::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects) {
 				}
 			}
 		}
-		isHit = true;
 	}
 	if (tick - attack_start > 300)
 	{
 		if (isAttack) //Is the attack button still down?
 		{
 			StartAttackSequence();
-		}
-		else
-		{
-
 		}
 	}
 }

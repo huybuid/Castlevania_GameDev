@@ -189,6 +189,13 @@ void CPlayScene::Update(DWORD dt)
 	{
 		items[i]->Update(dt, &coObjects);
 	}
+	j = 0;
+	while (j < items.size())
+	{
+		if (!items[j]->isActive)
+			items.erase(items.begin() + j);
+		else j++;
+	}
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 
@@ -288,16 +295,26 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 		break;
 	case DIK_0:
 		CGame::GetInstance()->SwitchScene(6, STAGE_6_X, STAGE_6_Y);
+		break;
+	case DIK_Q:
+		simon->SetWeapon(SIMON_WEAPON_STOPWATCH);
+		break;
+	case DIK_W:
+		simon->heart += 5;
+		DebugOut(L"[CHEAT] Simon plus 5 hearts\n");
+		break;
+	case DIK_E:
+		DebugOut(L"[INFO] Heart: %d\n", simon->heart);
 	}
 }
 
 void CPlayScenceKeyHandler::OnKeyUp(int KeyCode)
 {
-	DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
-	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
-	switch (KeyCode)
-	{
-	}
+	//DebugOut(L"[INFO] KeyUp: %d\n", KeyCode);
+	//CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
+	//switch (KeyCode)
+	//{
+	//}
 }
 
 void CPlayScenceKeyHandler::KeyState(BYTE *states)

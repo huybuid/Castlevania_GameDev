@@ -9,7 +9,7 @@ void CWeapon::CalcPotentialObjectsOverlapsed(vector<LPGAMEOBJECT> *coObjects,
 
 	for (UINT i = 0; i < coObjects->size(); i++)
 	{
-		if (!coObjects->at(i)->isAttackable) continue; //if we can't attack object then continue
+		if (!coObjects->at(i)->isAttackable || !coObjects->at(i)->isActive ) continue; //if we can't attack object then continue
 		LPCOLLISIONEVENT e;
 		if (this->isAABB(coObjects->at(i)))
 		{

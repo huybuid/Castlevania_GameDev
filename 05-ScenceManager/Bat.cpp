@@ -3,6 +3,24 @@
 
 void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	DWORD tick = GetTickCount();
+	if (freeze_start > 0)
+	{
+		if (isDamaged)
+		{
+			if (tick - damage_start > DAMAGE_FREEZE_TIME)
+			{
+				isDamaged = false;
+				damage_start = 0;
+			}
+		}
+		if (tick - freeze_start > freeze_time)
+		{
+			freeze_start = 0;
+			freeze_time = 0;
+		}
+		return;
+	}
 	CGameObject::Update(dt);
 	if (state == BAT_STATE_IDLE)
 	{
@@ -28,9 +46,9 @@ void Bat::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Bat::Render()
 {
 	if (!isActive) return;
+	if (freeze_start == 0)
 	animation_set->at(state)->Render(x, y, nx);
-
-
+	else animation_set->at(state)->FreezeRender(x, y, nx);
 }
 
 void Bat::SetState(int s)

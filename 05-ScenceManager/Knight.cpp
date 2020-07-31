@@ -4,6 +4,24 @@
 
 void Knight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
+	DWORD tick = GetTickCount();
+	if (freeze_start > 0)
+	{
+		if (isDamaged)
+		{
+			if (tick - damage_start > DAMAGE_FREEZE_TIME)
+			{
+				isDamaged = false;
+				damage_start = 0;
+			}
+		}
+		if (tick - freeze_start > freeze_time)
+		{
+			freeze_start = 0;
+			freeze_time = 0;
+		}
+		return;
+	}
 	CGameObject::Update(dt);
 	x += dx;
 	y += dy;
@@ -19,7 +37,9 @@ void Knight::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Knight::Render()
 {
 	if (!isActive) return;
-	animation_set->at(0)->Render(x,y,nx);
+	if (freeze_start == 0)
+		animation_set->at(state)->Render(x, y, nx);
+	else animation_set->at(state)->FreezeRender(x, y, nx);
 }
 
 void Knight::GetBoundingBox(float & left, float & top, float & right, float & bottom)

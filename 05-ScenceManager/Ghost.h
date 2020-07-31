@@ -15,15 +15,19 @@ class Ghost :
 {
 	DWORD switch_time;
 	int ny;
+	float trigger_x;
 public:
-	Ghost() :CEnemy() { hp = 6; switch_time = GetTickCount() - GHOST_SWITCH_TIME; };
-	Ghost(float x, float y) :Ghost() {
+	Ghost() :CEnemy() { hp = 6; switch_time = GetTickCount() - GHOST_SWITCH_TIME; isActive = false; };
+	Ghost(float x, float y, int nx, float tx) :Ghost() {
 		SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_GHOST));
 		SetPosition(x, y);
+		this->nx = nx;
+		trigger_x = tx;
 	};
 	void Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects = NULL);
 	void Render();
 	void GetBoundingBox(float &left, float &top, float &right, float &bottom);
+	void Destroy();
 	~Ghost();
 };
 

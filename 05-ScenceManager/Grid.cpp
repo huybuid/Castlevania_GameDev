@@ -54,13 +54,12 @@ CGameObject* CGrid::GetNewObject(int object, float x, float y, float w, float h,
 	case GRID_PORTAL:
 		return new CPortal(x, y, w, h, type);
 	case GRID_GHOST:
-		return new Ghost(x, y);
+		return new Ghost(x, y, n, w);
 	case GRID_HUNCHBACK:
-		return new Hunchback();
+		return new Hunchback(x, y, n);
+	case GRID_RAVEN:
+		return new Raven(x, y, n);
 	/*case PORTAL: return new CGate(x, y);
-	case PANTHER: return new CPanther(x, y, id_item);
-	case FISHMEN: return new CFishman(x, y, id_item);
-	case GHOST: return new CGhost(x, y, id_item);
 	case BAT: return new CBat(x, y, id_item);
 	case MONEY_5: return new CItemMoney(x, y, MONEY_5);*/
 	default:
@@ -91,10 +90,7 @@ void CGrid::GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_
 		{
 			for (auto& k : cells[i][j])
 			{
-				if (k->isActive)
-				{
-					ListObj.push_back(k);
-				}
+				ListObj.push_back(k);
 			}
 		}
 	}
@@ -105,4 +101,21 @@ void CGrid::Clear()
 	for (int i = 0; i < GRID_ROW_MAX; i++)
 		for (int j = 0; j < GRID_COLUMN_MAX; j++)
 			cells[i][j].clear();
+}
+
+void CGrid::StopTime()
+{
+	for (int i = 0; i < GRID_ROW_MAX; i++)
+	{
+		for (int j = 0; j < GRID_COLUMN_MAX; j++)
+		{
+			for (auto& k : cells[i][j])
+			{
+				if (dynamic_cast<CEnemy *>(k))
+				{
+					dynamic_cast<CEnemy *>(k)->Freeze(STOPWATCH_FREEZE_TIME);
+				}
+			}
+		}
+	}
 }

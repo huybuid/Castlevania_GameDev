@@ -11,6 +11,9 @@
 #include "Platform.h"
 #include "WeaponList.h"
 #include "Utils.h"
+#include "Grid.h"
+#include "Bat.h"
+#include "Raven.h"
 
 CSimon::CSimon(float x, float y, int nx, int state, int lvl, int h, int current_hp, int wp, int wp_lvl) : CSimon()
 {
@@ -212,14 +215,25 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		CollisionsWithEnemies(coObjects, enEvents);
 		if (enEvents.size() > 0)
 		{
-			if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
-				nx = -enEvents[0]->nx;
 			ResetAttackState();
-			SetState(SIMON_STATE_HURT);
+			if (state < SIMON_STATE_STAIRIDLE || state > SIMON_STATE_STAIRCLIMB)
+			{
+				nx = -enEvents[0]->nx;
+				SetState(SIMON_STATE_HURT);
+			}
+			else
+			{
+				StartUntouchable();
+			}
 			hp -= 2;
+			if (dynamic_cast<Bat *>(enEvents[0]->obj) || dynamic_cast<Raven *>(enEvents[0]->obj))
+			{
+				dynamic_cast<CEnemy *>(enEvents[0]->obj)->Destroy();
+			}
 		}
 	}
-
+	isOnStairBottom = false;
+	isOnStairTop = false;
 	//Items collision process
 	if (inEvents.size()>0)
 	for (UINT i = 0; i < inEvents.size(); i++)
@@ -248,8 +262,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					isOnStairTop = true;
 				}
 			}
-			else
-				isOnStairTop = false;
 			if (state == SIMON_STATE_STAIRCLIMB && e->obj->nx == stair_nx && stair_ny == -1)
 			{
 				SetState(SIMON_STATE_IDLE);
@@ -268,7 +280,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 					isOnStairBottom = true;
 				}
 			}
-			else isOnStairBottom = false;
 			if (state == SIMON_STATE_STAIRCLIMB && e->obj->nx == stair_nx && stair_ny == 1)
 			{
 				SetState(SIMON_STATE_IDLE);
@@ -291,7 +302,7 @@ void CSimon::ResetAttackState()
 	animation_set->at(SIMON_ANI_ATTACKING)->SetCurrentFrame();
 	animation_set->at(SIMON_ANI_STAIRUPATK)->SetCurrentFrame();
 	animation_set->at(SIMON_ANI_STAIRDOWNATK)->SetCurrentFrame();
-	if (state == SIMON_STATE_STAIRATK)
+	if (state >= SIMON_STATE_STAIRIDLE && state <=SIMON_STATE_STAIRCLIMB)
 	{
 		SetState(SIMON_STATE_STAIRIDLE);
 	}
@@ -490,11 +501,11 @@ void CSimon::StartAttackSequence(bool isWhipAtk)
 			isWeaponAttack = true;
 			heart--;
 		}
-		if (weapon_indicator == SIMON_WEAPON_STOPWATCH)
+		if (weapon_indicator == SIMON_WEAPON_STOPWATCH && !isWhipAtk)
 		{
 			if (heart >= 5)
 			{
-				//Stop time
+				CGrid::GetInstance()->StopTime();
 				heart -= 5;
 			}
 		}

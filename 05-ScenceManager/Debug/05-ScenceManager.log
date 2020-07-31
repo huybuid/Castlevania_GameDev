@@ -1,5 +1,51 @@
 ﻿C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\Common7\IDE\VC\VCTargets\Microsoft.CppBuild.targets(391,5): warning MSB8028: The intermediate directory (Debug\) contains files shared from another project (05-ScenceManager.vcxproj).  This can lead to incorrect clean and rebuild behavior.
+  Axe.cpp
+  Bat.cpp
+  Cross.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Dagger.cpp
+  Enemy.cpp
+  EnemyProjectile.cpp
   FirePillar.cpp
-  WeaponUpgrade.cpp
+  Ghost.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\ghost.cpp(46): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+  Grid.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\platform.h(20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\hunchback.h(34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\hunchback.h(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\grid.cpp(41): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\grid.cpp(59): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+  HolyWater.cpp
+  Hunchback.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\hunchback.h(34): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\hunchback.h(37): warning C4244: 'argument': conversion from 'time_t' to 'unsigned int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\hunchback.cpp(76): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Knight.cpp
+  PlayScence.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(62): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(63): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(64): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(65): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(81): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(82): warning C4244: 'initializing': conversion from 'double' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\playscence.cpp(227): warning C4018: '<': signed/unsigned mismatch
+  Raven.cpp
+  Simon.cpp
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\platform.h(20): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(29): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\cross.h(39): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(120): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(130): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(221): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(261): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(279): warning C4244: '=': conversion from 'int' to 'float', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(448): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(452): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(557): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+d:\study\gamedev-intro-tutorials-master\05-scencemanager\simon.cpp(558): warning C4244: '=': conversion from 'float' to 'int', possible loss of data
+  Weapon.cpp
+  Whip.cpp
+  Zombie.cpp
   Generating Code...
   05-ScenceManager.vcxproj -> D:\Study\gamedev-intro-tutorials-master\Debug\Castlevania.exe

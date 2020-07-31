@@ -21,6 +21,7 @@
 #define GRID_ZOMBIE			8
 #define GRID_GHOST			9
 #define GRID_HUNCHBACK		10
+#define GRID_RAVEN			11
 #define GRID_PORTAL			50
 
 using namespace std;
@@ -36,5 +37,5 @@ public:
 	CGameObject* GetNewObject(int object, float x, float y, float w, float h, int n, int type, int id_item);
 	void GetListObject(vector<LPGAMEOBJECT>& ListObj, float cam_x, float cam_y);
 	void Clear();
-
+	void StopTime();
 };

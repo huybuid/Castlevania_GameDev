@@ -136,9 +136,11 @@
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Dagger.cpp" />
+    <ClCompile Include="EnemyProjectile.cpp" />
     <ClCompile Include="FirePillar.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="HitFX.cpp" />
     <ClCompile Include="HolyWater.cpp" />
     <ClCompile Include="Hunchback.cpp" />
     <ClCompile Include="IAxe.cpp" />
@@ -149,6 +151,7 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="Knight.cpp" />
     <ClCompile Include="MoneyPouch.cpp" />
+    <ClCompile Include="Raven.cpp" />
     <ClCompile Include="Rosary.cpp" />
     <ClCompile Include="Orb.cpp" />
     <ClCompile Include="Platform.cpp" />
@@ -185,9 +188,11 @@
     <ClInclude Include="Cross.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="EnemyList.h" />
+    <ClInclude Include="EnemyProjectile.h" />
     <ClInclude Include="FirePillar.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Grid.h" />
+    <ClInclude Include="HitFX.h" />
     <ClInclude Include="HolyWater.h" />
     <ClInclude Include="Hunchback.h" />
     <ClInclude Include="IAxe.h" />
@@ -199,6 +204,8 @@
     <ClInclude Include="ItemList.h" />
     <ClInclude Include="Knight.h" />
     <ClInclude Include="MoneyPouch.h" />
+    <ClInclude Include="Raven.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Rosary.h" />
     <ClInclude Include="Orb.h" />
     <ClInclude Include="Platform.h" />

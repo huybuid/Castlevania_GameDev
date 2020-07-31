@@ -23,6 +23,7 @@
 class CItem :
 	public CGameObject
 {
+protected:
 	DWORD spawn_start;
 
 public:

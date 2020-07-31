@@ -3,6 +3,12 @@
 void SmallHeart::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 {
 	if (!isActive) return;
+	DWORD tick = GetTickCount();
+	if (tick - spawn_start > ITEM_SPAWN_TIME)
+	{
+		spawn_start = 0;
+		isActive = false;
+	}
 	CGameObject::Update(dt);
 	vector<LPCOLLISIONEVENT> coEvents;
 	vector<LPCOLLISIONEVENT> coEventsResult;

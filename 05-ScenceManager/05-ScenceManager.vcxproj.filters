@@ -163,6 +163,11 @@
     <ClCompile Include="Ghost.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
+    <ClCompile Include="Raven.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HitFX.cpp" />
+    <ClCompile Include="EnemyProjectile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BigHeart.h">
@@ -312,5 +317,11 @@
     <ClInclude Include="Ghost.h">
       <Filter>Enemy</Filter>
     </ClInclude>
+    <ClInclude Include="Raven.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HitFX.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="EnemyProjectile.h" />
   </ItemGroup>
 </Project>
