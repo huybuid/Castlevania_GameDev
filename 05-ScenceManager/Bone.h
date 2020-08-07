@@ -18,9 +18,8 @@ class Bone :
 	public CEnemy
 {
 public:
-	Bone() :CEnemy() { hp = 1; }
+	Bone() :CEnemy() { hp = 1; 	SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BONE)); }
 	Bone(float x, float y, float n, int type):Bone() {
-		SetAnimationSet(CAnimationSets::GetInstance()->Get(ANIMATION_SET_BONE));
 		SetPosition(x, y);
 		nx = n;
 		switch (type)

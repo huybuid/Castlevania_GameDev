@@ -15,7 +15,6 @@
 class CPlayScene: public CScene
 {
 protected: 
-	//CMario *player;					
 	// A play scene has to have player, right? 
 	CSimon * player;
 	Background background;
@@ -30,6 +29,7 @@ public:
 	vector<LPGAMEOBJECT> items;
 	vector<LPGAMEOBJECT> weapons;
 	vector<LPGAMEOBJECT> enemies_projectiles;
+	vector<LPGAMEOBJECT> effects;
 	virtual void Load();
 	virtual void Update(DWORD dt);
 	virtual void Render();

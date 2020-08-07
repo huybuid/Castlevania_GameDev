@@ -55,7 +55,7 @@ void FirePillar::Destroy()
 		if (item !=NULL)
 			((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->items.push_back(item);
 	}
-	isActive = false;
+	CEnemy::Destroy();
 }
 
 CItem *FirePillar::SpawnItem(int i)

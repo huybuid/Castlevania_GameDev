@@ -166,7 +166,6 @@
     <ClCompile Include="Raven.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
-    <ClCompile Include="HitFX.cpp" />
     <ClCompile Include="Skeleton.cpp">
       <Filter>Enemy</Filter>
     </ClCompile>
@@ -175,6 +174,12 @@
     </ClCompile>
     <ClCompile Include="Boss.cpp">
       <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="Fireball.cpp">
+      <Filter>Enemy</Filter>
+    </ClCompile>
+    <ClCompile Include="HitFX.cpp">
+      <Filter>Miscellaneous</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -328,7 +333,6 @@
     <ClInclude Include="Raven.h">
       <Filter>Enemy</Filter>
     </ClInclude>
-    <ClInclude Include="HitFX.h" />
     <ClInclude Include="Skeleton.h">
       <Filter>Enemy</Filter>
     </ClInclude>
@@ -337,6 +341,12 @@
     </ClInclude>
     <ClInclude Include="Boss.h">
       <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="Fireball.h">
+      <Filter>Enemy</Filter>
+    </ClInclude>
+    <ClInclude Include="HitFX.h">
+      <Filter>Miscellaneous</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

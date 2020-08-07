@@ -509,14 +509,13 @@ void CGame::SwitchScene(int scene_id, float x, float y, int nx, int state)
 
 	current_scene = scene_id;
 	LPSCENE s = scenes[scene_id];
-	if (player != NULL)
+	if (player)
 	{
 		dynamic_cast<CPlayScene *>(s)->SetPlayer(player);
-		dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetPosition(x, y);
-		dynamic_cast<CPlayScene *>(s)->GetPlayer()->nx = nx;
-		dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetState(state);
 	}
-	CGame::SetCamPos(0, 0);
 	CGame::GetInstance()->SetKeyHandler(s->GetKeyEventHandler());
-	s->Load();	
+	s->Load();
+	dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetPosition(x, y);
+	dynamic_cast<CPlayScene *>(s)->GetPlayer()->nx = nx;
+	dynamic_cast<CPlayScene *>(s)->GetPlayer()->SetState(state);
 }

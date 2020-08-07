@@ -15,7 +15,7 @@ public:
 		SetAnimationSet(ani_set);
 	};
 	~Rosary() {};
-	void Destroy() override { CItem::Destroy(); };
+	void Destroy() override;
 };
 
 

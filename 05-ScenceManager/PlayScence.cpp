@@ -50,38 +50,31 @@ CPlayScene::CPlayScene(int id, LPCWSTR filePath):
 void CPlayScene::_ParseSection_OBJECTS(string line)
 {
 	vector<string> tokens = split(line);
-
-
 	//DebugOut(L"--> %s\n",ToWSTR(line).c_str());
 
-	if (tokens.size() < 11) return; // skip invalid lines - an object set must have all values
+	if (tokens.size() < 10) return; // skip invalid lines - an object set must have all values
 
 	int object_type = atoi(tokens[0].c_str());
 	int grid_x = atoi(tokens[1].c_str());
 	int	grid_y = atoi(tokens[2].c_str());
-	float x = atof(tokens[4].c_str());
-	float y = atof(tokens[5].c_str());
-	float w = atof(tokens[6].c_str());
-	float h = atof(tokens[7].c_str());
-	int nx = atoi(tokens[8].c_str());
-	int type = atoi(tokens[9].c_str());
-	int item_id = atoi(tokens[10].c_str());
-
-	int ani_set_id = atoi(tokens[3].c_str());
-
-
-	CAnimationSets * animation_sets = CAnimationSets::GetInstance();
+	float x = atof(tokens[3].c_str());
+	float y = atof(tokens[4].c_str());
+	float w = atof(tokens[5].c_str());
+	float h = atof(tokens[6].c_str());
+	int nx = atoi(tokens[7].c_str());
+	int type = atoi(tokens[8].c_str());
+	int item_id = atoi(tokens[9].c_str());
 
 	CGameObject *obj = NULL;
 
 	CItem *item = NULL;
 
-	if (tokens.size() > 14)
+	if (tokens.size() > 13)
 	{
-		float simon_x = atof(tokens[11].c_str());
-		float simon_y = atof(tokens[12].c_str());
-		int simon_nx = atoi(tokens[13].c_str());
-		int simon_state = atoi(tokens[14].c_str());
+		float simon_x = atof(tokens[10].c_str());
+		float simon_y = atof(tokens[11].c_str());
+		int simon_nx = atoi(tokens[12].c_str());
+		int simon_state = atoi(tokens[13].c_str());
 		obj = new CPortal(x, y, w, h, type, simon_x, simon_y, simon_nx, simon_state);
 	}
 
@@ -103,7 +96,7 @@ void CPlayScene::_ParseSection_OBJECTS(string line)
 		break;
 	default:
 		CGrid::GetInstance()->Insert(object_type, grid_x, grid_y, x, y, w, h, nx, type, item_id);
-		DebugOut(L"[ERR] Invalid object type: %d\n", object_type);
+		DebugOut(L"[INFO] Object created: %d\n", object_type);
 		return;
 	}
 }
@@ -205,19 +198,26 @@ void CPlayScene::Update(DWORD dt)
 			enemies_projectiles.erase(enemies_projectiles.begin() + j);
 		else j++;
 	}
+	for (size_t i = 0; i < effects.size(); i++)
+		effects[i]->Update(dt);
+	j = 0;
+	while (j < effects.size())
+	{
+		if (!effects[j]->isActive)
+			effects.erase(effects.begin() + j);
+		else j++;
+	}
 	// skip the rest if scene was already unloaded (Mario::Update might trigger PlayScene::Unload)
 	if (player == NULL) return; 
 
 	// Update camera to follow mario
 	float cx, cy;
 	CGame::GetInstance()->GetCamPos(cx, cy);
-	if (CGame::GetInstance()->GetCurrentSceneNo() == 6 && cx == background.screen_limit - SCREEN_WIDTH) return;
+	if (CGame::GetInstance()->GetCurrentSceneNo() == 6 && cx == background.screen_limit - SCREEN_WIDTH && player->x >= background.screen_limit - SCREEN_WIDTH) return;
 	player->GetPosition(cx, cy);
 	cx -= game->GetScreenWidth() / 2 - 16;
 	if (cx < 0) { cx = 0; }
 	if (cx > background.screen_limit - SCREEN_WIDTH) { cx = background.screen_limit - SCREEN_WIDTH; }
-
-
 	CGame::GetInstance()->SetCamPos(cx, 0.0f /*cy*/);
 }
 
@@ -245,6 +245,10 @@ void CPlayScene::Render()
 	{
 		enemies_projectiles[i]->Render();
 	}
+	for (size_t i = 0; i < effects.size(); i++)
+	{
+		effects[i]->Render();
+	}
 }
 
 /*
@@ -256,6 +260,8 @@ void CPlayScene::Unload()
 		CGrid::GetInstance()->Clear();
 	items.clear();
 	weapons.clear();
+	enemies_projectiles.clear();
+	effects.clear();
 	DebugOut(L"[INFO] Scene %s unloaded! \n", sceneFilePath);
 }
 
@@ -337,7 +343,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
 	int state = simon->GetState();
 	// disable control key when Simon die 
-	if (state == SIMON_STATE_HURT) return;
+	if (simon->hurt_start > 0) return;
 	if (state == SIMON_STATE_WALKING && simon->isWalkingtoStair) return; //disable 
 	if (simon->isAttack) return;
 	if (state >= SIMON_STATE_STAIRIDLE && state <= SIMON_STATE_STAIRCLIMB)

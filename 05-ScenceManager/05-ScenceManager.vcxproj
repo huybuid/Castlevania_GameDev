@@ -138,6 +138,7 @@
     <ClCompile Include="Chicken.cpp" />
     <ClCompile Include="Cross.cpp" />
     <ClCompile Include="Dagger.cpp" />
+    <ClCompile Include="Fireball.cpp" />
     <ClCompile Include="FirePillar.cpp" />
     <ClCompile Include="Ghost.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -192,6 +193,7 @@
     <ClInclude Include="Cross.h" />
     <ClInclude Include="Dagger.h" />
     <ClInclude Include="EnemyList.h" />
+    <ClInclude Include="Fireball.h" />
     <ClInclude Include="FirePillar.h" />
     <ClInclude Include="Ghost.h" />
     <ClInclude Include="Grid.h" />

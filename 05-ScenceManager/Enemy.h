@@ -4,12 +4,10 @@
 #define STOPWATCH_FREEZE_TIME	3000
 #define DAMAGE_FREEZE_TIME	250
 
-#define DEATH_FX	513
 class CEnemy :
 	public CGameObject
 {
 protected:
-	LPANIMATION deathfx = CAnimations::GetInstance()->Get(DEATH_FX);
 	int hp;
 	bool isDamaged = false;
 	DWORD damage_start = 0;

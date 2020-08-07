@@ -1,8 +1,24 @@
 #include "Enemy.h"
+#include "PlayScence.h"
+#include "HitFX.h"
 
 void CEnemy::Destroy()
 {
+	float fx_x, fx_y;
+	float t, l, r, b;
+	GetBoundingBox(l, t, r, b);
+	if (r - l < 16)
+	{
+		fx_x = x;
+		fx_y = y + 2;
+	}
+	else
+	{
+		fx_x = x + 4;
+		fx_y = y + 2;
+	}
 	isActive = 0;
+	((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->effects.push_back(new HitFX(fx_x, fx_y, 1));
 }
 
 

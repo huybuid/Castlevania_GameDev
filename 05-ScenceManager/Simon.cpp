@@ -17,8 +17,6 @@
 
 CSimon::CSimon(float x, float y, int nx, int state, int lvl, int h, int current_hp, int wp, int wp_lvl) : CSimon()
 {
-	start_x = x;
-	start_y = y;
 	this->nx = nx;
 	this->x = x;
 	this->y = y;
@@ -49,7 +47,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	// Calculate dx, dy 
 	if (state != SIMON_STATE_STAIRATK && state != SIMON_STATE_STAIRIDLE && state != SIMON_STATE_STAIRCLIMB)
 	{
-		if ((isJump || isHurt) && !isFall)
+		if ((isJump || hurt_start > 0) && !isFall)
 			vy += SIMON_JUMP_GRAVITY * dt;
 		else vy += SIMON_GRAVITY * dt;
 	}
@@ -63,7 +61,6 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	if (tick - hurt_start > SIMON_HURT_TIME && hurt_start > 0)
 	{
-		hurt_start = 0;
 		isFall = true;
 	}
 	// reset attack if attack time has passed
@@ -181,6 +178,8 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		if (nx != 0) vx = 0;
 		if (ny < 0)
 		{
+			if (hurt_start > 0)
+				hurt_start = 0;
 			isFall = false;
 			if (isJump)
 			{
@@ -251,7 +250,7 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			CPortal *p = dynamic_cast<CPortal *>(e->obj);
 			CGame::GetInstance()->SwitchScene(p->GetSceneId(),p->simon_x, p->simon_y, p->simon_nx, p->simon_state);
-			continue;
+			return;
 		}
 		if (dynamic_cast<StairTop *>(e->obj))
 		{
@@ -466,6 +465,11 @@ void CSimon::SetState(int state)
 		StartUntouchable();
 		if (prevstate < SIMON_STATE_STAIRIDLE || prevstate > SIMON_STATE_STAIRCLIMB)
 		{
+			if (isDuck)
+			{
+				isDuck = false;
+				y -= 8;
+			}
 			vx = -nx * SIMON_STAIR_SPEED;
 			vy = -SIMON_HURT_SPEED;
 			hurt_start = untouchable_start;

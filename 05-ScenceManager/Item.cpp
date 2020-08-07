@@ -48,6 +48,6 @@ void CItem::GetBoundingBox(float & left, float & top, float & right, float & bot
 {
 	left = x;
 	top = y;
-	right = x + 16;
-	bottom = y + 16;
+	right = x + ITEM_BBOX_WIDTH;
+	bottom = y + ITEM_BBOX_HEIGHT;
 }

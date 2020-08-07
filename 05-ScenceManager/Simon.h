@@ -1,12 +1,13 @@
 #pragma once
 #include "GameObject.h"
+#include "Game.h"
 #include "Whip.h"
 #include "define.h"
 
 #define SIMON_WALKING_SPEED		0.07f 
 #define SIMON_STAIR_SPEED		0.05f
 #define SIMON_JUMP_SPEED_Y		0.23f
-#define SIMON_HURT_SPEED		0.15f
+#define SIMON_HURT_SPEED		0.2f
 #define SIMON_JUMP_GRAVITY		0.0007f
 #define SIMON_GRAVITY			0.002f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
@@ -75,7 +76,6 @@ public:
 	DWORD untouchable_start, attack_start, jump_start, hurt_start;
 
 	Whip *whip;
-	CWeapon *weapon;
 
 	float start_x;			// initial position of Simon at scene
 	float start_y;
@@ -85,7 +85,37 @@ public:
 public:
 	CSimon(float x, float y, int nx, int state = 0, int lvl = 0, int h = 5, int current_hp = 16, int wp = 0, int wp_lvl = 0);
 	CSimon(CSimon *s);
-	CSimon() :CGameObject() { this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_SIMON); whip = new Whip(); };
+	CSimon() :CGameObject() { 
+		this->animation_set = CAnimationSets::GetInstance()->Get(ANIMATION_SET_SIMON); 
+		whip = new Whip();
+		switch (CGame::GetInstance()->GetCurrentSceneNo())
+		{
+		case 1:
+			start_x = STAGE_1_X;
+			start_y = STAGE_1_Y;
+			break;
+		case 2:
+			start_x = STAGE_2_X;
+			start_y = STAGE_2_Y;
+			break;
+		case 3:
+			start_x = STAGE_3_X;
+			start_y = STAGE_3_Y;
+			break;
+		case 4:
+			start_x = STAGE_4_X;
+			start_y = STAGE_4_Y;
+			break;
+		case 5:
+			start_x = STAGE_5_X;
+			start_y = STAGE_5_Y;
+			break;
+		case 6:
+			start_x = STAGE_6_X;
+			start_y = STAGE_6_Y;
+			break;
+		}
+	};
 	~CSimon() {};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);
 	virtual void Render();

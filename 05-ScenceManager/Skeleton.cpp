@@ -102,7 +102,7 @@ void Skeleton::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 void Skeleton::Render()
 {
 	if (!isActive) return;
-	if (damage_start == 0)
+	if (freeze_start == 0)
 		animation_set->at(0)->Render(x, y, nx);
 	else animation_set->at(0)->FreezeRender(x, y, nx);
 }
