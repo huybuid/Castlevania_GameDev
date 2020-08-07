@@ -57,6 +57,7 @@ void Cross::Update(DWORD dt, vector<LPGAMEOBJECT>* coObjects)
 			{
 				CEnemy *target = dynamic_cast<CEnemy *>(e->obj);
 				target->Damage(dmg);
+				((CPlayScene*)CGame::GetInstance()->GetCurrentScene())->effects.push_back(new HitFX(target->x, target->y, 0));
 			}
 		}
 	}

@@ -1,5 +1,6 @@
 #pragma once
 #include "GameObject.h"
+#include "HitFX.h"
 
 #define WEAPON_STATE_DEACTIVATE		0
 #define WEAPON_STATE_ATTACK			1
