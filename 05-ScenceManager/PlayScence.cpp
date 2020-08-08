@@ -269,7 +269,7 @@ void CPlayScenceKeyHandler::OnKeyDown(int KeyCode)
 {
 	DebugOut(L"[INFO] KeyDown: %d\n", KeyCode);
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
-	if (simon->state == SIMON_STATE_HURT) return;
+	if (simon->state == SIMON_STATE_HURT|| simon->state == SIMON_STATE_DIE) return;
 	switch (KeyCode)
 	{
 	case DIK_X:
@@ -343,6 +343,7 @@ void CPlayScenceKeyHandler::KeyState(BYTE *states)
 	CSimon *simon = ((CPlayScene*)scence)->GetPlayer();
 	int state = simon->GetState();
 	// disable control key when Simon die 
+	if (simon->state == SIMON_STATE_DIE) return;
 	if (simon->hurt_start > 0) return;
 	if (state == SIMON_STATE_WALKING && simon->isWalkingtoStair) return; //disable 
 	if (simon->isAttack) return;

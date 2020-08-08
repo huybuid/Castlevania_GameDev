@@ -12,6 +12,7 @@
 #define SIMON_GRAVITY			0.002f
 #define SIMON_DIE_DEFLECT_SPEED	 0.5f
 #define SIMON_MAX_HP			16
+#define SIMON_OUTOFSCREEN_Y		240
 
 #define SIMON_STATE_IDLE			0
 #define SIMON_STATE_WALKING			10
@@ -57,6 +58,7 @@
 #define SIMON_ATTACK_TIME		350
 #define SIMON_JUMP_TIME			400
 #define SIMON_HURT_TIME			400
+#define SIMON_DIE_TIME			1000
 
 #define TARGET_X_NaN	-9999 //because Simon will never reach this x cordinate, this can be an indicator for NaN value 
 
@@ -73,7 +75,7 @@ public:
 	bool isDuck;
 	bool isHurt;
 	bool isOnStairTop, isOnStairBottom, isWalkingtoStair = false;
-	DWORD untouchable_start, attack_start, jump_start, hurt_start;
+	DWORD untouchable_start, attack_start, jump_start, hurt_start, die_start;
 
 	Whip *whip;
 
@@ -115,6 +117,7 @@ public:
 			start_y = STAGE_6_Y;
 			break;
 		}
+		hp = SIMON_MAX_HP;
 	};
 	~CSimon() {};
 	virtual void Update(DWORD dt, vector<LPGAMEOBJECT> *colliable_objects = NULL);

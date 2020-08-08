@@ -53,6 +53,11 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 	}
 	CGameObject::Update(dt);
 	DWORD tick = GetTickCount();
+	if (tick - die_start > SIMON_DIE_TIME && die_start > 0)
+	{
+		die_start = 0;
+		HardReset();
+	}
 	// reset untouchable timer if untouchable time has passed
 	if (tick - untouchable_start > SIMON_UNTOUCHABLE_TIME)
 	{
@@ -153,6 +158,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 
 		if (!isJump && (tick - hurt_start > SIMON_HURT_TIME && hurt_start > 0)) 
 			isFall = true;
+		if (y > SIMON_OUTOFSCREEN_Y && state != SIMON_STATE_DIE)
+		{
+			SetState(SIMON_STATE_DIE);
+		}
 	}
 	else
 	{
@@ -180,6 +189,10 @@ void CSimon::Update(DWORD dt, vector<LPGAMEOBJECT> *coObjects)
 		{
 			if (hurt_start > 0)
 				hurt_start = 0;
+			if (hp <= 0 && state != SIMON_STATE_DIE)
+			{
+				SetState(SIMON_STATE_DIE);
+			}
 			isFall = false;
 			if (isJump)
 			{
@@ -425,7 +438,7 @@ void CSimon::SetState(int state)
 		vx = 0;
 		break;
 	case SIMON_STATE_DIE:
-		vy = -SIMON_DIE_DEFLECT_SPEED;
+		die_start = GetTickCount();
 		break;
 	case SIMON_STATE_ATTACKING:
 		if (isJump)
@@ -483,7 +496,7 @@ void CSimon::GetBoundingBox(float &left, float &top, float &right, float &bottom
 	left = x+8;
 	top = y;
 
-	if (isDuck || (isJump && !isFall))
+	if (isDuck || (isJump && !isFall) || state == SIMON_STATE_DIE)
 	{
 		right = left + SIMON_DUCKING_BBOX_WIDTH;
 		bottom = y + SIMON_DUCKING_BBOX_HEIGHT;
@@ -536,6 +549,9 @@ void CSimon::Reset(float reset_x, float reset_y, int nx, int state)
 	start_y = reset_y;
 	this->nx = nx;
 	SetPosition(reset_x, reset_y);
+	isHurt = 0;
+	untouchable_start = 0;
+	isHurt = 0;
 }
 
 void CSimon::HardReset()
